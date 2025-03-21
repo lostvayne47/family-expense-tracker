@@ -2,15 +2,27 @@ import { Router } from "express";
 import GroupSchema from "../models/groupModel.js";
 import fetchUser from "../middleware/fetchUser.js";
 import UserSchema from "../models/userModel.js";
+import crypto from "crypto";
 const groupRouter = Router();
 
-// groupName: { type: String, required: true },
-// groupPasscode: { type: Number, required: true, unique: true },
-// groupMembers: { type: Array, required: true, default: [] },
-// groupDescription: { type: String },
-// groupAdmin: { type: Array, required: true },
-// groupExpenses: { type: Array, default: [] },
-// date: { type: Date, default: Date.now() },
+function generateGroupKey(length = 6) {
+  return crypto.randomBytes(length).toString("hex").slice(0, length);
+}
+
+async function generateUniqueGroupKey() {
+  let uniquePasscode = generateGroupKey(); // Call function to get initial passcode
+  let checkUnique = await GroupSchema.findOne({
+    groupPasscode: uniquePasscode,
+  });
+
+  while (checkUnique) {
+    // Loop until we find a unique key
+    uniquePasscode = generateGroupKey(); // Generate a new key
+    checkUnique = await GroupSchema.findOne({ groupPasscode: uniquePasscode });
+  }
+
+  return uniquePasscode;
+}
 
 //Create user
 //TODO:Generate Unique Passcode
@@ -24,10 +36,11 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    let uniquePasscode = await generateUniqueGroupKey();
     const { groupName, groupDesc } = req.body;
     const group = await GroupSchema.create({
       groupName,
-      groupPasscode: "12345",
+      groupPasscode: uniquePasscode,
       groupMembers: [user.userName],
       groupDesc,
       groupAdmin: [user.userName],
@@ -39,7 +52,8 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
       { $push: { userGroups: group.id } }, // Only update userGroups
       { new: true }
     );
-    res.send([group, user]);
+    //TODO:Send Unique Group Passcode as response
+    res.status(201).send([group, user]);
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
@@ -52,9 +66,27 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
 //TODO: get user details from auth token and fetch all groups
 groupRouter.get("/getgroups", async (req, res) => {
   try {
-    res.send("Get Groups");
+    const groups = await GroupSchema.find();
+    res.send(groups);
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
+  }
+});
+
+//Get all user groups
+//TODO: get user details from auth token and fetch all groups
+groupRouter.get("/getusergroups", async (req, res) => {
+  try {
+    const groups = await GroupSchema.find();
+    res.send(groups);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
@@ -64,7 +96,10 @@ groupRouter.put("/updategroup", async (req, res) => {
   try {
     res.send("Update Group");
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
@@ -74,7 +109,10 @@ groupRouter.delete("/deletegroup", async (req, res) => {
   try {
     res.send("Delete Group");
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
@@ -87,7 +125,10 @@ groupRouter.put("/joingroup", async (req, res) => {
   try {
     res.send("Join Group");
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
