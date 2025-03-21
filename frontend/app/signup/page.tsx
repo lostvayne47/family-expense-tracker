@@ -1,5 +1,7 @@
 "use client";
+
 import { FormEvent } from "react";
+import { redirect } from "next/navigation";
 
 // TODO: fix use client -> maybe make form a separate component
 export default function Signup() {
@@ -22,6 +24,7 @@ export default function Signup() {
     );
     if (response.ok) {
       console.log("User created successfully");
+      redirect("/login");
     } else {
       console.error("Failed to create user");
     }
