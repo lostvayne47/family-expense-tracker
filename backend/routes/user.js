@@ -55,4 +55,20 @@ userRouter.get("/getuser/:id", async (req, res) => {
     });
   }
 });
+
+//Authenticate user
+userRouter.post("/authuser", async (req, res) => {
+  const { email, password } = req.body;
+
+  let user = await UserSchema.findOne({ userEmail: email });
+  if (!user || password != user.userPassword) {
+    return res.status(400).json({
+      error: "Please try to login with correct credentials",
+    });
+  } else {
+    return res.status(200).json({
+      success: "Successfully Logged in",
+    });
+  }
+});
 export default userRouter;
