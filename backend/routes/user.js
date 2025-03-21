@@ -44,11 +44,14 @@ userRouter.post("/createuser", async (req, res) => {
   }
 });
 
-//Get All Users
-userRouter.get("/getallusers", async (req, res) => {
+// //Get user
+userRouter.get("/getuser", fetchUser, async (req, res) => {
   try {
-    const user = await UserSchema.find().select("-userPassword");
-    res.send(user);
+    const userId = req.user?.id;
+    const userDetails = await UserSchema.findById(userId).select(
+      "-userPassword"
+    );
+    res.send(userDetails);
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
@@ -83,22 +86,6 @@ userRouter.post("/login", async (req, res) => {
     const authToken = jwt.sign(data, JWT_SECRET);
     success = true;
     return res.status(200).json({ success, authToken: authToken });
-  }
-});
-
-// //Get user
-userRouter.get("/getuser", fetchUser, async (req, res) => {
-  try {
-    const userId = req.user?.id;
-    const userDetails = await UserSchema.findById(userId).select(
-      "-userPassword"
-    );
-    res.send(userDetails);
-  } catch (error) {
-    return res.status(500).json({
-      error: "Server error",
-      message: error.message,
-    });
   }
 });
 
