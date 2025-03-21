@@ -1,5 +1,7 @@
 import express from "express";
 import UserSchema from "../models/userModel.js";
+import bcrypt from "bcrypt";
+
 const userRouter = express.Router();
 
 //Create user
@@ -8,14 +10,16 @@ userRouter.post("/createuser", async (req, res) => {
     let user = await UserSchema.findOne({ email: req.body.email });
     if (user) {
       return res.status(400).json({
-        success,
         error: "Email already exists",
       });
     } else {
+      const salt = (await bcrypt.genSalt(10)).toString();
+      const secPass = (await bcrypt.hash(req.body.password, salt)).toString();
+
       const user = await UserSchema.create({
         userName: req.body.name,
         userEmail: req.body.email,
-        userPassword: req.body.password,
+        userPassword: secPass,
         userGroups: req.body?.userGroups,
         userExpenses: req.body?.userExpenses,
         date: Date.now(),
@@ -61,11 +65,18 @@ userRouter.post("/authuser", async (req, res) => {
   const { email, password } = req.body;
 
   let user = await UserSchema.findOne({ userEmail: email });
-  if (!user || password != user.userPassword) {
+
+  if (!user) {
     return res.status(400).json({
       error: "Please try to login with correct credentials",
     });
   } else {
+    const passwordCompare = await bcrypt.compare(password, user.userPassword);
+    if (!passwordCompare) {
+      return res.status(400).json({
+        error: "Please try to login with correct credentials",
+      });
+    }
     return res.status(200).json({
       success: "Successfully Logged in",
     });
