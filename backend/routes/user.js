@@ -9,18 +9,20 @@ let success = false;
 //Create user
 userRouter.post("/createuser", async (req, res) => {
   try {
-    let user = await UserSchema.findOne({ email: req.body.email });
+    let user = await UserSchema.findOne({ email: req.body.userEmail });
     if (user) {
       return res.status(400).json({
         error: "Email already exists",
       });
     } else {
       const salt = (await bcrypt.genSalt(10)).toString();
-      const secPass = (await bcrypt.hash(req.body.password, salt)).toString();
+      const secPass = (
+        await bcrypt.hash(req.body.userPassword, salt)
+      ).toString();
 
       const user = await UserSchema.create({
-        userName: req.body.name,
-        userEmail: req.body.email,
+        userName: req.body.userName,
+        userEmail: req.body.userEmail,
         userPassword: secPass,
         userGroups: req.body?.userGroups,
         userExpenses: req.body?.userExpenses,
@@ -62,16 +64,19 @@ userRouter.get("/getuser", fetchUser, async (req, res) => {
 
 //Authenticate user
 userRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { userEmail, userPassword } = req.body;
 
-  let user = await UserSchema.findOne({ userEmail: email });
+  let user = await UserSchema.findOne({ userEmail: userEmail });
 
   if (!user) {
     return res.status(400).json({
       error: "Please try to login with correct credentials",
     });
   } else {
-    const passwordCompare = await bcrypt.compare(password, user.userPassword);
+    const passwordCompare = await bcrypt.compare(
+      userPassword,
+      user.userPassword
+    );
     if (!passwordCompare) {
       return res.status(400).json({
         error: "Please try to login with correct credentials",

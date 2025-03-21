@@ -38,7 +38,7 @@ async function getUser(req) {
 //TODO:Generate Unique Passcode
 groupRouter.post("/creategroup", fetchUser, async (req, res) => {
   try {
-    const user = await getUser(req);
+    let user = await getUser(req);
     let uniquePasscode = await generateUniqueGroupKey();
     const { groupName, groupDesc } = req.body;
     const group = await GroupSchema.create({
