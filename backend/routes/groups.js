@@ -1,5 +1,7 @@
 import { Router } from "express";
-
+import GroupSchema from "../models/groupModel.js";
+import fetchUser from "../middleware/fetchUser.js";
+import UserSchema from "../models/userModel.js";
 const groupRouter = Router();
 
 // groupName: { type: String, required: true },
@@ -12,11 +14,37 @@ const groupRouter = Router();
 
 //Create user
 //TODO:Generate Unique Passcode
-groupRouter.post("/creategroup", async (req, res) => {
+groupRouter.post("/creategroup", fetchUser, async (req, res) => {
   try {
-    res.send("Create Group");
+    if (!req.user?.id) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+    let user = await UserSchema.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const { groupName, groupDesc } = req.body;
+    const group = await GroupSchema.create({
+      groupName,
+      groupPasscode: "12345",
+      groupMembers: [user.userName],
+      groupDesc,
+      groupAdmin: [user.userName],
+      date: Date.now(),
+    });
+
+    user = await UserSchema.findByIdAndUpdate(
+      user.id,
+      { $push: { userGroups: group.id } }, // Only update userGroups
+      { new: true }
+    );
+    res.send([group, user]);
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
