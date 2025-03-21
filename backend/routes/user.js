@@ -1,9 +1,11 @@
 import express from "express";
 import UserSchema from "../models/userModel.js";
 import bcrypt from "bcrypt";
-
+import jwt from "jsonwebtoken";
+import fetchUser from "../middleware/fetchUser.js";
 const userRouter = express.Router();
-
+const JWT_SECRET = process.env.JWT_SECRET;
+let success = false;
 //Create user
 userRouter.post("/createuser", async (req, res) => {
   try {
@@ -24,7 +26,15 @@ userRouter.post("/createuser", async (req, res) => {
         userExpenses: req.body?.userExpenses,
         date: Date.now(),
       });
-      res.send(user);
+      //Show what was sent as response
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      success = true;
+      res.json({ success, authToken: authToken });
     }
   } catch (error) {
     return res.status(500).json({
@@ -37,20 +47,7 @@ userRouter.post("/createuser", async (req, res) => {
 //Get All Users
 userRouter.get("/getallusers", async (req, res) => {
   try {
-    const user = await UserSchema.find();
-    res.send(user);
-  } catch (error) {
-    return res.status(500).json({
-      error: "Server error",
-      message: error.message,
-    });
-  }
-});
-
-//Get User
-userRouter.get("/getuser/:id", async (req, res) => {
-  try {
-    const user = await UserSchema.findById(req.params.id);
+    const user = await UserSchema.find().select("-userPassword");
     res.send(user);
   } catch (error) {
     return res.status(500).json({
@@ -61,7 +58,7 @@ userRouter.get("/getuser/:id", async (req, res) => {
 });
 
 //Authenticate user
-userRouter.post("/authuser", async (req, res) => {
+userRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   let user = await UserSchema.findOne({ userEmail: email });
@@ -77,9 +74,32 @@ userRouter.post("/authuser", async (req, res) => {
         error: "Please try to login with correct credentials",
       });
     }
-    return res.status(200).json({
-      success: "Successfully Logged in",
+    //Show what was sent as response
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+    const authToken = jwt.sign(data, JWT_SECRET);
+    success = true;
+    return res.status(200).json({ success, authToken: authToken });
+  }
+});
+
+// //Get user
+userRouter.get("/getuser", fetchUser, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const userDetails = await UserSchema.findById(userId).select(
+      "-userPassword"
+    );
+    res.send(userDetails);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
     });
   }
 });
+
 export default userRouter;
