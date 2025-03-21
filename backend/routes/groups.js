@@ -24,18 +24,21 @@ async function generateUniqueGroupKey() {
   return uniquePasscode;
 }
 
+async function getUser(req) {
+  if (!req.user?.id) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+  let user = await UserSchema.findById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  return user;
+}
 //Create user
 //TODO:Generate Unique Passcode
 groupRouter.post("/creategroup", fetchUser, async (req, res) => {
   try {
-    if (!req.user?.id) {
-      return res.status(400).json({ error: "User ID is required" });
-    }
-    let user = await UserSchema.findById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
+    const user = await getUser(req);
     let uniquePasscode = await generateUniqueGroupKey();
     const { groupName, groupDesc } = req.body;
     const group = await GroupSchema.create({
@@ -63,7 +66,6 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
 });
 
 //Get all groups
-//TODO: get user details from auth token and fetch all groups
 groupRouter.get("/getgroups", async (req, res) => {
   try {
     const groups = await GroupSchema.find();
@@ -78,9 +80,11 @@ groupRouter.get("/getgroups", async (req, res) => {
 
 //Get all user groups
 //TODO: get user details from auth token and fetch all groups
-groupRouter.get("/getusergroups", async (req, res) => {
+groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
   try {
-    const groups = await GroupSchema.find();
+    const user = await getUser(req);
+    console.log(user.userGroups);
+    const groups = await GroupSchema.find({ _id: { $in: user.userGroups } });
     res.send(groups);
   } catch (error) {
     return res.status(500).json({
