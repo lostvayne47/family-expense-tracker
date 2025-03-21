@@ -15,7 +15,10 @@ userRouter.post("/createuser", async (req, res) => {
     });
     res.send(user);
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 
@@ -25,7 +28,10 @@ userRouter.get("/getallusers", async (req, res) => {
     const user = await UserSchema.find();
     res.send(user);
   } catch (error) {
-    console.log(error.message);
+    return res.status(500).json({
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 export default userRouter;
