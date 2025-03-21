@@ -7,7 +7,7 @@ import userRouter from "./routes/user.js";
 
 connectToMongo();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 // ✅ Middleware (Must Be Before Routes)
 app.use(express.json()); // Required for parsing JSON in POST requests
