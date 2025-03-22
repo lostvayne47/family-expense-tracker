@@ -6,27 +6,32 @@ import { redirect } from "next/navigation";
 // TODO: fix use client -> maybe make form a separate component
 export default function Signup() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-    };
-    const response = await fetch(
-      "http://localhost:5000/api/v1/user/createuser",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const data = {
+        userName: formData.get("username"),
+        userEmail: formData.get("email"),
+        userPassword: formData.get("password"),
+      };
+      const response = await fetch(
+        "http://localhost:5000/api/v1/user/createuser",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("User created successfully");
+        redirect("/login");
+      } else {
+        console.error("Failed to create user");
       }
-    );
-    if (response.ok) {
-      console.log("User created successfully");
-      redirect("/login");
-    } else {
-      console.error("Failed to create user");
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -58,6 +63,21 @@ export default function Signup() {
               Create an account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Enter Name
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Yash"
+                />
+              </div>
               <div>
                 <label
                   htmlFor="email"

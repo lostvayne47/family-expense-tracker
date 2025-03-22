@@ -9,7 +9,7 @@ let success = false;
 //Create user
 userRouter.post("/createuser", async (req, res) => {
   try {
-    let user = await UserSchema.findOne({ email: req.body.userEmail });
+    let user = await UserSchema.findOne({ userEmail: req.body.userEmail });
     if (user) {
       return res.status(400).json({
         error: "Email already exists",
