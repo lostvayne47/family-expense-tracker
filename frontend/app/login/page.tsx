@@ -7,8 +7,8 @@ export default function Login() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      userEmail: formData.get("email"),
+      userPassword: formData.get("password"),
     };
     const response = await fetch("http://localhost:5000/api/v1/user/login", {
       method: "POST",
@@ -17,10 +17,11 @@ export default function Login() {
         "Content-Type": "application/json",
       },
     });
+
+    const resData = await response.json();
     if (response.ok) {
-      console.log("Login successfully");
       // TODO: see how the response is and set the token
-      localStorage.setItem("access-token", "");
+      localStorage.setItem("auth-token", resData.authToken);
       redirect("/dashboard");
     } else {
       console.error("Failed to login");
