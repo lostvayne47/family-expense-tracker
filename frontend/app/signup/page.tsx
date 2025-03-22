@@ -77,6 +77,7 @@ export default function Signup() {
                   type="text"
                   name="username"
                   id="username"
+                  autoComplete="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Yash"
                   required
@@ -93,6 +94,7 @@ export default function Signup() {
                   type="email"
                   name="email"
                   id="email"
+                  autoComplete="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="abc@email.com"
                   required
@@ -109,6 +111,7 @@ export default function Signup() {
                   type="password"
                   name="password"
                   id="password"
+                  autoComplete="new-password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
@@ -125,6 +128,7 @@ export default function Signup() {
                   type="password"
                   name="confirm-password"
                   id="confirm-password"
+                  autoComplete="new-password"
                   placeholder="••••••••"
                   onChange={confirmPassword}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
