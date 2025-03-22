@@ -28,15 +28,15 @@ userRouter.post("/createuser", async (req, res) => {
         userExpenses: req.body?.userExpenses,
         date: Date.now(),
       });
-      //Show what was sent as response
-      const data = {
-        user: {
-          id: user.id,
-        },
-      };
-      const authToken = jwt.sign(data, JWT_SECRET);
+      // //Show what was sent as response
+      // const data = {
+      //   user: {
+      //     id: user.id,
+      //   },
+      // };
+      // const authToken = jwt.sign(data, JWT_SECRET);
       success = true;
-      res.json({ success, authToken: authToken });
+      res.json({ success, message: "User Created Successfully" });
     }
   } catch (error) {
     return res.status(500).json({
