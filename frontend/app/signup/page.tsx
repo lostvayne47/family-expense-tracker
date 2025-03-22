@@ -71,7 +71,7 @@ export default function Signup() {
                   htmlFor="username"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Enter Name
+                  Enter Name<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -88,7 +88,7 @@ export default function Signup() {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Your email<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -105,7 +105,7 @@ export default function Signup() {
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Password
+                  Password<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -122,7 +122,7 @@ export default function Signup() {
                   htmlFor="confirm-password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Confirm password
+                  Confirm password<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -137,6 +137,7 @@ export default function Signup() {
               </div>
               <button
                 type="submit"
+                disabled={isFormValid}
                 className="w-full text-white bg-black hover:bg-gray-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 Create an account
