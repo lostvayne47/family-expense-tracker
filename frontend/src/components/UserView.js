@@ -10,23 +10,23 @@ export default function UserView({ userData }) {
         <div className="space-y-3">
           <p>
             <span className="font-semibold text-gray-400">Username:</span>{" "}
-            {userData.userName}
+            {userData?.userName || ""}
           </p>
           <p>
             <span className="font-semibold text-gray-400">Email:</span>{" "}
-            {userData.userEmail}
+            {userData?.userEmail || ""}
           </p>
           <p>
             <span className="font-semibold text-gray-400">User ID:</span>{" "}
-            {userData._id}
+            {userData?._id || ""}
           </p>
           <p>
             <span className="font-semibold text-gray-400">Groups:</span>{" "}
-            {userData.userGroups.join(" ")}
+            {userData?.userGroups.join(" ") || ""}
           </p>
           <p>
             <span className="font-semibold text-gray-400">Total Expenses:</span>{" "}
-            {userData.userExpenses.join(" ")}
+            {userData?.userExpenses.join(" ") || ""}
           </p>
         </div>
       </div>
