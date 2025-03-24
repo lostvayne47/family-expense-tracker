@@ -8,7 +8,7 @@ const groupRouter = Router();
 function generateGroupKey(length = 6) {
   return crypto.randomBytes(length).toString("hex").slice(0, length);
 }
-
+//Generate unique group passcode
 async function generateUniqueGroupKey() {
   let uniquePasscode = generateGroupKey(); // Call function to get initial passcode
   let checkUnique = await GroupSchema.findOne({
@@ -23,7 +23,7 @@ async function generateUniqueGroupKey() {
 
   return uniquePasscode;
 }
-
+//Get user from Middleware
 async function getUser(req) {
   if (!req.user?.id) {
     return res.status(400).json({ error: "User ID is required" });
@@ -97,8 +97,10 @@ groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
 
 //Update group
 //TODO: Write updation logic
-groupRouter.put("/updategroup", async (req, res) => {
+groupRouter.put("/updategroup", fetchUser, async (req, res) => {
   try {
+    const user = await getUser(req);
+    console.log(user);
     res.send("Update Group");
   } catch (error) {
     return res.status(500).json({
@@ -125,7 +127,10 @@ groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
           "You are not authorized to delete this group or it does not exist.",
       });
     }
-
+    await UserSchema.updateMany(
+      { userGroups: { $in: [req.body?.groupId] } },
+      { $pull: { userGroups: req.body?.groupId } }
+    );
     res
       .status(200)
       .send({ success: true, message: "Group deleted successfully." });
