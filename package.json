@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "both": "concurrently \"cd frontend && npm run dev\" \"cd backend && nodemon\""
+    "both": "concurrently \"cd frontend && npm run start\" \"cd backend && nodemon\""
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
