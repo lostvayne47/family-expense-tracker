@@ -82,7 +82,6 @@ groupRouter.get("/getgroups", async (req, res) => {
 });
 
 //Get all user groups
-//TODO: get user details from auth token and fetch all groups
 groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
   try {
     const user = await getUser(req);
