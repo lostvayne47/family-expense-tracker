@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
 const LandingPage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const authToken = localStorage.getItem("auth-token");
+    if (authToken) {
+      navigate("/home");
+    }
+  }, []);
   function handleClick(event) {
     const location = event.target.name;
     if (location) {
