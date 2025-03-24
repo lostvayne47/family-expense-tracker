@@ -110,7 +110,6 @@ groupRouter.put("/updategroup", async (req, res) => {
 });
 
 //Delete group
-//TODO: Validate user id
 groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
   try {
     const user = await getUser(req);
