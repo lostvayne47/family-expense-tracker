@@ -11,7 +11,9 @@ userRouter.post("/createuser", async (req, res) => {
     let user = await UserSchema.findOne({ userEmail: req.body.userEmail });
     if (user) {
       return res.status(400).json({
+        success: false,
         error: "Email already exists",
+        message: "Email already exists",
       });
     } else {
       const salt = (await bcrypt.genSalt(10)).toString();
