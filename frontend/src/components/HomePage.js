@@ -3,6 +3,7 @@ import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../redux/actions/user.js";
+import Loader from "./Loader.js";
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
@@ -15,11 +16,10 @@ const HomePage = () => {
   }, []);
 
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.user);
-  console.log(user);
+  const { user, loading } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchUser()); // Fetch user data when the component loads
-  }, [dispatch]);
+  }, []);
 
   return (
     <div
@@ -52,9 +52,13 @@ const HomePage = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center h-[80vh]">
-        <h1 className="text-4xl font-bold">Welcome to the Home Page</h1>
-      </div>
+      {true ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col items-center justify-center h-[80vh]">
+          <h1 className="text-4xl font-bold">Welcome to the Home Page</h1>
+        </div>
+      )}
     </div>
   );
 };
