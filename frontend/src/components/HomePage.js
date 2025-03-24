@@ -4,6 +4,10 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../redux/actions/user.js";
 import Loader from "./Loader.js";
+import "../css/home.css";
+import UserView from "../components/UserView.js";
+import GroupView from "./GroupView.js";
+
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
@@ -34,7 +38,7 @@ const HomePage = () => {
         }`}
       >
         <span className="text-lg font-semibold">
-          Hi, {user?.userName || ""}
+          Hi, {user?.userName || "Guest"}
         </span>
         <button
           onClick={() => {
@@ -55,8 +59,19 @@ const HomePage = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex flex-col items-center justify-center h-[80vh]">
-          <h1 className="text-4xl font-bold">Welcome to the Home Page</h1>
+        <div
+          class="d-flex bg-dark text-white"
+          style={{ height: "calc(100vh - 90px)" }}
+        >
+          <div class="w-25 p-3 border border-white">
+            <h2 class="fs-4 fw-bold">User Overview</h2>
+            <UserView />
+          </div>
+
+          <div class="w-75 p-3 border border-white d-flex flex-column">
+            <h2 class="fs-4 fw-bold text-center">Group Overview</h2>
+            <GroupView />
+          </div>
         </div>
       )}
     </div>
