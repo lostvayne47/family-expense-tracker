@@ -6,12 +6,6 @@ import fetchUser from "../middleware/fetchUser.js";
 
 const expensesRouter = Router();
 
-// expenseName: { type: String, required: true },
-// expenseAmount: { type: Number, required: true, default: 0 },
-// expenseOwner: { type: String, required: true },
-// expenseOwnerId: { type: Number, required: true, unique: true },
-// expenseDate: { type: Date, default: Date.now() },
-
 //Get user from Middleware
 async function getUser(req) {
   if (!req.user?.id) {
