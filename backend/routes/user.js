@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import fetchUser from "../middleware/fetchUser.js";
 const userRouter = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
-let success = false;
 //Create user
 userRouter.post("/createuser", async (req, res) => {
   try {
@@ -35,11 +34,11 @@ userRouter.post("/createuser", async (req, res) => {
       //   },
       // };
       // const authToken = jwt.sign(data, JWT_SECRET);
-      success = true;
-      res.json({ success, message: "User Created Successfully" });
+      res.json({ success: true, message: "User Created Successfully" });
     }
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -56,6 +55,7 @@ userRouter.get("/getuser", fetchUser, async (req, res) => {
     res.send(userDetails);
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -64,33 +64,44 @@ userRouter.get("/getuser", fetchUser, async (req, res) => {
 
 //Authenticate user
 userRouter.post("/login", async (req, res) => {
-  const { userEmail, userPassword } = req.body;
+  try {
+    const { userEmail, userPassword } = req.body;
 
-  let user = await UserSchema.findOne({ userEmail: userEmail });
+    let user = await UserSchema.findOne({ userEmail: userEmail });
 
-  if (!user) {
-    return res.status(400).json({
-      error: "Please try to login with correct credentials",
-    });
-  } else {
-    const passwordCompare = await bcrypt.compare(
-      userPassword,
-      user.userPassword
-    );
-    if (!passwordCompare) {
+    if (!user) {
       return res.status(400).json({
-        error: "Please try to login with correct credentials",
+        success: false,
+        error: "Invalid Credentials",
+        message: "Please try to login with correct credentials",
       });
+    } else {
+      const passwordCompare = await bcrypt.compare(
+        userPassword,
+        user.userPassword
+      );
+      if (!passwordCompare) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid Credentials",
+          message: "Please try to login with correct credentials",
+        });
+      }
+      //Show what was sent as response
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      return res.status(200).json({ success: true, authToken: authToken });
     }
-    //Show what was sent as response
-    const data = {
-      user: {
-        id: user.id,
-      },
-    };
-    const authToken = jwt.sign(data, JWT_SECRET);
-    success = true;
-    return res.status(200).json({ success, authToken: authToken });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: "Server error",
+      message: error.message,
+    });
   }
 });
 

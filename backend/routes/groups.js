@@ -30,7 +30,11 @@ async function getUser(req) {
   }
   let user = await UserSchema.findById(req.user.id);
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res.status(404).json({
+      success: false,
+      error: "User not found",
+      message: "User not found",
+    });
   }
   return user;
 }
@@ -62,6 +66,7 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -75,6 +80,7 @@ groupRouter.get("/getgroups", async (req, res) => {
     res.send(groups);
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -89,6 +95,7 @@ groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
     res.send(groups);
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -123,6 +130,7 @@ groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
 
     if (!group) {
       return res.status(403).json({
+        success: false,
         error: "Forbidden",
         message:
           "You are not authorized to delete this group or it does not exist.",
@@ -138,6 +146,7 @@ groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
       .send({ success: true, message: "Group deleted successfully." });
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });
@@ -153,6 +162,7 @@ groupRouter.put("/joingroup", fetchUser, async (req, res) => {
     });
     if (!group) {
       return res.status(404).json({
+        success: false,
         error: "Group not found",
         message:
           "The provided passcode is invalid or the group does not exist.",
@@ -185,6 +195,7 @@ groupRouter.put("/joingroup", fetchUser, async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      success: false,
       error: "Server error",
       message: error.message,
     });

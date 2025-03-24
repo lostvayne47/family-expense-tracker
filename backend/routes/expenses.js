@@ -35,7 +35,11 @@ expensesRouter.post("/createexpense", fetchUser, async (req, res) => {
     // Check if the group exists
     const group = await GroupSchema.findOne({ _id: expenseGroupId });
     if (!group) {
-      return res.status(404).json({ error: "Group not found." });
+      return res.status(404).json({
+        success: false,
+        error: "Group not found.",
+        message: "Group not found.",
+      });
     }
 
     // Create new expense
@@ -58,7 +62,9 @@ expensesRouter.post("/createexpense", fetchUser, async (req, res) => {
       message: "Expense created successfully.",
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error", message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 });
 
@@ -70,7 +76,11 @@ expensesRouter.get("/groupexpenses/:groupId", fetchUser, async (req, res) => {
     // Check if the group exists
     const group = await GroupSchema.findById(groupId);
     if (!group) {
-      return res.status(404).json({ error: "Group not found." });
+      return res.status(404).json({
+        success: false,
+        error: "Group not found.",
+        message: "Group not found.",
+      });
     }
 
     // Fetch all expenses belonging to this group
@@ -82,7 +92,9 @@ expensesRouter.get("/groupexpenses/:groupId", fetchUser, async (req, res) => {
       expenses,
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error", message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 });
 
@@ -101,7 +113,9 @@ expensesRouter.get("/userexpenses", fetchUser, async (req, res) => {
       expenses,
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error", message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 });
 
@@ -117,14 +131,20 @@ expensesRouter.put("/updateexpense/:expenseId", fetchUser, async (req, res) => {
     let expense = await ExpenseSchema.findById(expenseId);
 
     if (!expense) {
-      return res.status(404).json({ error: "Expense not found." });
+      return res.status(404).json({
+        success: false,
+        error: "Expense not found.",
+        message: "Expense not found.",
+      });
     }
 
     // Check if the user is the owner of the expense
     if (expense.expenseOwnerId !== userId) {
-      return res
-        .status(403)
-        .json({ error: "You are not authorized to update this expense." });
+      return res.status(403).json({
+        success: false,
+        error: "You are not authorized to update this expense.",
+        message: "You are not authorized to update this expense.",
+      });
     }
 
     // Update only the fields that are provided
@@ -140,7 +160,9 @@ expensesRouter.put("/updateexpense/:expenseId", fetchUser, async (req, res) => {
       updatedExpense: expense,
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error", message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 });
 
@@ -163,9 +185,11 @@ expensesRouter.delete(
 
       // Check if the user is the owner of the expense
       if (expense.expenseOwnerId !== userId) {
-        return res
-          .status(403)
-          .json({ error: "You are not authorized to delete this expense." });
+        return res.status(403).json({
+          success: false,
+          error: "You are not authorized to delete this expense.",
+          message: "You are not authorized to delete this expense.",
+        });
       }
 
       // Remove expenseId from the group's groupExpenses array
@@ -182,7 +206,11 @@ expensesRouter.delete(
         message: "Expense deleted successfully.",
       });
     } catch (error) {
-      res.status(500).json({ error: "Server error", message: error.message });
+      res.status(500).json({
+        success: false,
+        error: "Server error",
+        message: error.message,
+      });
     }
   }
 );
