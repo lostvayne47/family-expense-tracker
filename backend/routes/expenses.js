@@ -149,4 +149,47 @@ expensesRouter.put("/updateexpense/:expenseId", fetchUser, async (req, res) => {
     res.status(500).json({ error: "Server error", message: error.message });
   }
 });
+
+// Delete an expense
+expensesRouter.delete(
+  "/deleteexpense/:expenseId",
+  fetchUser,
+  async (req, res) => {
+    try {
+      const { expenseId } = req.params;
+      const user = await getUser(req); // Extract user from middleware
+      const userId = user.id;
+
+      // Find the expense
+      const expense = await ExpenseSchema.findById(expenseId);
+
+      if (!expense) {
+        return res.status(404).json({ error: "Expense not found." });
+      }
+
+      // Check if the user is the owner of the expense
+      if (expense.expenseOwnerId !== userId) {
+        return res
+          .status(403)
+          .json({ error: "You are not authorized to delete this expense." });
+      }
+
+      // Remove expenseId from the group's groupExpenses array
+      await GroupSchema.updateOne(
+        { _id: expense.expenseGroupId },
+        { $pull: { groupExpenses: expenseId } }
+      );
+
+      // Delete the expense
+      await ExpenseSchema.findByIdAndDelete(expenseId);
+
+      res.status(200).json({
+        success: true,
+        message: "Expense deleted successfully.",
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Server error", message: error.message });
+    }
+  }
+);
 export default expensesRouter;
