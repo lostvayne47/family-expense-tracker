@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTheme } from "./ThemeProvider";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { createUser } from "../api/user";
 
 const SignupPage = () => {
   const { darkMode } = useTheme();
@@ -9,7 +10,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const isFormValid =
     fullName.trim().length >= 3 &&
     email.trim() !== "" &&
@@ -29,16 +30,21 @@ const SignupPage = () => {
     e.target.reportValidity();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isFormValid) {
-      setError(
-        "All fields are required, name must be at least 3 characters, and passwords must be at least 8 characters and match"
-      );
-      return;
+
+    const payload = {
+      userName: fullName,
+      userEmail: email,
+      userPassword: password,
+    };
+
+    const status = await createUser(payload);
+    if (status?.success) {
+      navigate("/login");
+    } else {
+      setError(status?.message || "Something went wrong");
     }
-    setError("");
-    // Proceed with signup logic
   };
 
   return (
@@ -67,6 +73,8 @@ const SignupPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="username"
+              required
             />
           </label>
           <label className="block text-sm font-bold">
@@ -81,6 +89,8 @@ const SignupPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="Email"
+              required
             />
           </label>
           <label className="block text-sm font-bold">
@@ -95,6 +105,8 @@ const SignupPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="new-password"
+              required
             />
           </label>
           <label className="block text-sm font-bold">
@@ -109,6 +121,8 @@ const SignupPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="new-password"
+              required
             />
           </label>
           <button

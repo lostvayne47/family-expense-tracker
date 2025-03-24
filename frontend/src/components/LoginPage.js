@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useTheme } from "./ThemeProvider";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { loginUser } from "../api/user";
 
 const LoginPage = () => {
   const { darkMode } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const isFormValid = email.trim() !== "" && password.trim() !== "";
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Proceed with login logic
+    const payload = {
+      userEmail: email,
+      userPassword: password,
+    };
+    const status = await loginUser(payload);
+    if (status?.success) {
+      navigate("/home");
+    } else {
+      setError(status?.message);
+    }
   };
 
   return (
@@ -26,6 +37,7 @@ const LoginPage = () => {
         }`}
       >
         <h2 className="text-3xl font-extrabold text-center mb-6">Login</h2>
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="space-y-4" onSubmit={handleSubmit}>
           <label className="block text-sm font-bold">
             Email <span className="text-red-500">*</span>
@@ -39,6 +51,8 @@ const LoginPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="email"
+              required
             />
           </label>
           <label className="block text-sm font-bold">
@@ -53,6 +67,8 @@ const LoginPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
+              autoComplete="new-password"
+              required
             />
           </label>
           <button
