@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
-  const username = "Aayush";
+  const userName = useSelector((state) => state.user.userName);
+  console.log(userName);
   useEffect(() => {
     const authToken = localStorage.getItem("auth-token");
     if (!authToken) {
@@ -25,7 +27,7 @@ const HomePage = () => {
           darkMode ? "bg-gray-800" : "bg-gray-100"
         }`}
       >
-        <span className="text-lg font-semibold">Hi, {username}</span>
+        <span className="text-lg font-semibold">Hi, {userName}</span>
         <button
           onClick={() => {
             localStorage.removeItem("auth-token");
