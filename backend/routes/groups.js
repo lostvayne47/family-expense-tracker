@@ -35,7 +35,6 @@ async function getUser(req) {
   return user;
 }
 //Create user
-//TODO:Generate Unique Passcode
 groupRouter.post("/creategroup", fetchUser, async (req, res) => {
   try {
     let user = await getUser(req);
@@ -56,7 +55,7 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
       { new: true }
     );
     //TODO:Send Unique Group Passcode as response
-    res.status(201).send([group, user]);
+    res.status(201).send(group.groupPasscode);
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
@@ -83,7 +82,6 @@ groupRouter.get("/getgroups", async (req, res) => {
 groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
   try {
     const user = await getUser(req);
-    console.log(user.userGroups);
     const groups = await GroupSchema.find({ _id: { $in: user.userGroups } });
     res.send(groups);
   } catch (error) {
@@ -121,13 +119,44 @@ groupRouter.delete("/deletegroup", async (req, res) => {
 });
 
 //Join Group
-//TODO:
-//Validate Unique Passcode
-//Add groupId to userGroups
-//Add userId to groupMembers
-groupRouter.put("/joingroup", async (req, res) => {
+groupRouter.put("/joingroup", fetchUser, async (req, res) => {
   try {
-    res.send("Join Group");
+    const user = await getUser(req);
+    const group = await GroupSchema.findOne({
+      groupPasscode: req.body?.groupPasscode,
+    });
+    if (!group) {
+      return res.status(404).json({
+        error: "Group not found",
+        message:
+          "The provided passcode is invalid or the group does not exist.",
+      });
+    }
+
+    // Check if the user is already part of the group
+    if (user.userGroups.includes(group.id)) {
+      return res.status(400).json({
+        success: false,
+        error: "Already in the group",
+        message: `${user.userName} is already a member of ${group.groupName}`,
+      });
+    }
+
+    // Ensure userGroups and groupMembers arrays exist
+    if (!user.userGroups) user.userGroups = [];
+    if (!group.groupMembers) group.groupMembers = [];
+
+    user.userGroups.push(group.id);
+    group.groupMembers.push(user.userName);
+
+    // Save updates to database
+    await user.save();
+    await group.save();
+
+    res.status(200).send({
+      success: true,
+      message: `${user.userName} is added to ${group.groupName} successfully!`,
+    });
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
