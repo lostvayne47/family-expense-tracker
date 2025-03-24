@@ -60,15 +60,15 @@ const HomePage = () => {
         <Loader />
       ) : (
         <div
-          class="d-flex bg-dark text-white"
+          class="d-flex gap-2 bg-dark text-white"
           style={{ height: "calc(100vh - 90px)" }}
         >
-          <div class="w-25 p-3 border border-white">
+          <div class="w-25 p-3 border">
             <h2 class="fs-4 fw-bold">User Overview</h2>
             <UserView />
           </div>
 
-          <div class="w-75 p-3 border border-white d-flex flex-column">
+          <div class="w-75 p-3 border d-flex flex-column">
             <h2 class="fs-4 fw-bold text-center">Group Overview</h2>
             <GroupView />
           </div>
