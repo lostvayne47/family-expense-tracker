@@ -95,20 +95,21 @@ groupRouter.get("/getusergroups", fetchUser, async (req, res) => {
   }
 });
 
-//Update group
-//TODO: Write updation logic
-groupRouter.put("/updategroup", fetchUser, async (req, res) => {
-  try {
-    const user = await getUser(req);
-    console.log(user);
-    res.send("Update Group");
-  } catch (error) {
-    return res.status(500).json({
-      error: "Server error",
-      message: error.message,
-    });
-  }
-});
+//UPDATION TO BE TAKEN UP LATER
+// //Update group
+// //TODO: Write updation logic
+// groupRouter.put("/updategroup", fetchUser, async (req, res) => {
+//   try {
+//     const user = await getUser(req);
+//     console.log(user);
+//     res.send("Update Group");
+//   } catch (error) {
+//     return res.status(500).json({
+//       error: "Server error",
+//       message: error.message,
+//     });
+//   }
+// });
 
 //Delete group
 groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
@@ -127,6 +128,7 @@ groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
           "You are not authorized to delete this group or it does not exist.",
       });
     }
+    //Update all members who were a part of this elete group
     await UserSchema.updateMany(
       { userGroups: { $in: [req.body?.groupId] } },
       { $pull: { userGroups: req.body?.groupId } }
