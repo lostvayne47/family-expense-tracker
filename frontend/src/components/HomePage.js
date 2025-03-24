@@ -64,7 +64,7 @@ const HomePage = () => {
           style={{ height: "calc(100vh - 90px)" }}
         >
           <div class="w-25 p-3 d-flex flex-column align-items-middle justify-content-center">
-            <UserView />
+            <UserView userData={user} />
           </div>
 
           <div class="w-75 p-3 d-flex flex-column">

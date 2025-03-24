@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function UserView() {
+export default function UserView({ userData }) {
   return (
     <div className="h-100 flex items-center justify-center text-gray-300 ">
       <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-700">
@@ -9,23 +9,24 @@ export default function UserView() {
         </h2>
         <div className="space-y-3">
           <p>
-            <span className="font-semibold text-gray-400">Username:</span> John
-            Doe
+            <span className="font-semibold text-gray-400">Username:</span>{" "}
+            {userData.userName}
           </p>
           <p>
             <span className="font-semibold text-gray-400">Email:</span>{" "}
-            johndoe@example.com
+            {userData.userEmail}
           </p>
           <p>
-            <span className="font-semibold text-gray-400">User ID:</span> 123456
+            <span className="font-semibold text-gray-400">User ID:</span>{" "}
+            {userData._id}
           </p>
           <p>
-            <span className="font-semibold text-gray-400">Groups:</span> Admin,
-            Editor
+            <span className="font-semibold text-gray-400">Groups:</span>{" "}
+            {userData.userGroups.join(" ")}
           </p>
           <p>
             <span className="font-semibold text-gray-400">Total Expenses:</span>{" "}
-            $5000
+            {userData.userExpenses.join(" ")}
           </p>
         </div>
       </div>
