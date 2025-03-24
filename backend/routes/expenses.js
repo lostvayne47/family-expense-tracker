@@ -68,28 +68,27 @@ expensesRouter.post("/createexpense", fetchUser, async (req, res) => {
   }
 });
 
-//Create expense
-expensesRouter.post("/createexpense", async (req, res) => {
+// Get all expenses for a group
+expensesRouter.get("/groupexpenses/:groupId", fetchUser, async (req, res) => {
   try {
-    res.send("Create Expense");
+    const { groupId } = req.params;
+
+    // Check if the group exists
+    const group = await GroupSchema.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ error: "Group not found." });
+    }
+
+    // Fetch all expenses belonging to this group
+    const expenses = await ExpenseSchema.find({ expenseGroupId: groupId });
+
+    res.status(200).json({
+      success: true,
+      message: "Expenses fetched successfully.",
+      expenses,
+    });
   } catch (error) {
-    console.log(error.message);
-  }
-});
-//Create expense
-expensesRouter.post("/createexpense", async (req, res) => {
-  try {
-    res.send("Create Expense");
-  } catch (error) {
-    console.log(error.message);
-  }
-});
-//Create expense
-expensesRouter.post("/createexpense", async (req, res) => {
-  try {
-    res.send("Create Expense");
-  } catch (error) {
-    console.log(error.message);
+    res.status(500).json({ error: "Server error", message: error.message });
   }
 });
 export default expensesRouter;
