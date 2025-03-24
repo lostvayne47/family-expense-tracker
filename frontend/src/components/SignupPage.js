@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Link } from "react-router";
+
 const SignupPage = () => {
   const { darkMode } = useTheme();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const isFormValid =
+    fullName.trim().length >= 3 &&
+    email.trim() !== "" &&
+    password.length >= 8 &&
+    confirmPassword.trim() !== "" &&
+    password === confirmPassword;
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    e.target.setCustomValidity(
+      e.target.value === password ? "" : "Passwords do not match"
+    );
+    e.target.reportValidity();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isFormValid) {
+      setError(
+        "All fields are required, name must be at least 3 characters, and passwords must be at least 8 characters and match"
+      );
+      return;
+    }
+    setError("");
+    // Proceed with signup logic
+  };
 
   return (
     <div
@@ -16,40 +53,73 @@ const SignupPage = () => {
         }`}
       >
         <h2 className="text-3xl font-extrabold text-center mb-6">Sign Up</h2>
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className={`w-full px-4 py-2 rounded-lg border ${
-              darkMode
-                ? "border-gray-600 bg-gray-700 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className={`w-full px-4 py-2 rounded-lg border ${
-              darkMode
-                ? "border-gray-600 bg-gray-700 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className={`w-full px-4 py-2 rounded-lg border ${
-              darkMode
-                ? "border-gray-600 bg-gray-700 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
-          />
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <label className="block text-sm font-bold">
+            Full Name <span className="text-red-500">*</span>
+            <input
+              type="text"
+              placeholder="Full Name (at least 3 characters)"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
+          <label className="block text-sm font-bold">
+            Email <span className="text-red-500">*</span>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
+          <label className="block text-sm font-bold">
+            Password <span className="text-red-500">*</span>
+            <input
+              type="password"
+              placeholder="Password (at least 8 characters)"
+              value={password}
+              onChange={handlePasswordChange}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
+          <label className="block text-sm font-bold">
+            Confirm Password <span className="text-red-500">*</span>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
           <button
             type="submit"
+            disabled={!isFormValid}
             className={`w-full px-4 py-2 rounded-lg font-bold transition ${
-              darkMode
-                ? "bg-blue-600 hover:bg-blue-500"
-                : "bg-blue-500 hover:bg-blue-400 text-white"
+              isFormValid
+                ? darkMode
+                  ? "bg-blue-600 hover:bg-blue-500"
+                  : "bg-blue-500 hover:bg-blue-400 text-white"
+                : "bg-gray-400 cursor-not-allowed"
             }`}
           >
             Create Account
