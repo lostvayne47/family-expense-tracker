@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Link } from "react-router";
 
 const LoginPage = () => {
   const { darkMode } = useTheme();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Proceed with login logic
+  };
 
   return (
     <div
@@ -17,31 +26,44 @@ const LoginPage = () => {
         }`}
       >
         <h2 className="text-3xl font-extrabold text-center mb-6">Login</h2>
-        <form className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className={`w-full px-4 py-2 rounded-lg border ${
-              darkMode
-                ? "border-gray-600 bg-gray-700 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className={`w-full px-4 py-2 rounded-lg border ${
-              darkMode
-                ? "border-gray-600 bg-gray-700 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
-          />
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <label className="block text-sm font-bold">
+            Email <span className="text-red-500">*</span>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
+          <label className="block text-sm font-bold">
+            Password <span className="text-red-500">*</span>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`w-full px-4 py-2 rounded-lg border ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
+            />
+          </label>
           <button
             type="submit"
+            disabled={!isFormValid}
             className={`w-full px-4 py-2 rounded-lg font-bold transition ${
-              darkMode
-                ? "bg-blue-600 hover:bg-blue-500"
-                : "bg-blue-500 hover:bg-blue-400 text-white"
+              isFormValid
+                ? darkMode
+                  ? "bg-blue-600 hover:bg-blue-500"
+                  : "bg-blue-500 hover:bg-blue-400 text-white"
+                : "bg-gray-400 cursor-not-allowed"
             }`}
           >
             Log In
