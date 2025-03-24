@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "./ThemeProvider";
-
+import { Link } from "react-router";
 const SignupPage = () => {
   const { darkMode } = useTheme();
 
@@ -57,9 +57,9 @@ const SignupPage = () => {
         </form>
         <p className="text-center mt-4">
           Already have an account?{" "}
-          <a href="#" className="text-blue-400 hover:underline">
+          <Link to="/login" className="text-blue-400 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>
