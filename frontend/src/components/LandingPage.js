@@ -10,6 +10,7 @@ const LandingPage = () => {
     if (authToken) {
       navigate("/home");
     }
+    // eslint-disable-next-line
   }, []);
   function handleClick(event) {
     const location = event.target.name;
