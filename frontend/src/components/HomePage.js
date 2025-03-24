@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUser } from "../redux/actions/user.js";
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
-  const userName = useSelector((state) => state.user.userName);
-  console.log(userName);
   useEffect(() => {
     const authToken = localStorage.getItem("auth-token");
     if (!authToken) {
@@ -14,6 +13,13 @@ const HomePage = () => {
     }
     // eslint-disable-next-line
   }, []);
+
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector((state) => state.user);
+  console.log(user);
+  useEffect(() => {
+    dispatch(fetchUser()); // Fetch user data when the component loads
+  }, [dispatch]);
 
   return (
     <div
@@ -27,7 +33,9 @@ const HomePage = () => {
           darkMode ? "bg-gray-800" : "bg-gray-100"
         }`}
       >
-        <span className="text-lg font-semibold">Hi, {userName}</span>
+        <span className="text-lg font-semibold">
+          Hi, {user?.userName || ""}
+        </span>
         <button
           onClick={() => {
             localStorage.removeItem("auth-token");
