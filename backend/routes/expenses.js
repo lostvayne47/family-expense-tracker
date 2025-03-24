@@ -91,4 +91,23 @@ expensesRouter.get("/groupexpenses/:groupId", fetchUser, async (req, res) => {
     res.status(500).json({ error: "Server error", message: error.message });
   }
 });
+
+// Get all expenses for a user
+expensesRouter.get("/userexpenses", fetchUser, async (req, res) => {
+  try {
+    const user = await getUser(req); // Extract user from middleware
+    const userId = user.id;
+
+    // Fetch all expenses belonging to this user
+    const expenses = await ExpenseSchema.find({ expenseOwnerId: userId });
+
+    res.status(200).json({
+      success: true,
+      message: "User expenses fetched successfully.",
+      expenses,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error", message: error.message });
+  }
+});
 export default expensesRouter;
