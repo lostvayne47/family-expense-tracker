@@ -1,18 +1,7 @@
-import React, { useEffect, useState } from "react";
-
+import React from "react";
+import { useTheme } from "./ThemeProvider";
 const LandingPage = () => {
-  const [darkMode, setDarkMode] = useState(
-    window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = () => setDarkMode(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
+  const { darkMode } = useTheme();
   return (
     <div
       className={`min-h-screen flex flex-col justify-center items-center transition-all duration-300 ${
