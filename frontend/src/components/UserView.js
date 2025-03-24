@@ -2,8 +2,8 @@ import React from "react";
 
 export default function UserView() {
   return (
-    <div className="flex items-center justify-center bg-gray-900 text-gray-300 p-6">
-      <div className="w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-700">
+    <div className="h-100 flex items-center justify-center text-gray-300 ">
+      <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-700">
         <h2 className="text-2xl font-bold text-gray-100 mb-4">
           User Information
         </h2>
