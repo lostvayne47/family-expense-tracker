@@ -110,4 +110,43 @@ expensesRouter.get("/userexpenses", fetchUser, async (req, res) => {
     res.status(500).json({ error: "Server error", message: error.message });
   }
 });
+
+// Update an expense
+expensesRouter.put("/updateexpense/:expenseId", fetchUser, async (req, res) => {
+  try {
+    const { expenseId } = req.params;
+    const { expenseName, expenseAmount } = req.body;
+    const user = await getUser(req); // Extract user from middleware
+    const userId = user.id;
+
+    // Find the expense
+    let expense = await ExpenseSchema.findById(expenseId);
+
+    if (!expense) {
+      return res.status(404).json({ error: "Expense not found." });
+    }
+
+    // Check if the user is the owner of the expense
+    if (expense.expenseOwnerId !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You are not authorized to update this expense." });
+    }
+
+    // Update only the fields that are provided
+    if (expenseName) expense.expenseName = expenseName;
+    if (expenseAmount) expense.expenseAmount = expenseAmount;
+
+    // Save the updated expense
+    await expense.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Expense updated successfully.",
+      updatedExpense: expense,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error", message: error.message });
+  }
+});
 export default expensesRouter;
