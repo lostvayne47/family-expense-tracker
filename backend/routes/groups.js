@@ -45,7 +45,7 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
       groupPasscode: uniquePasscode,
       groupMembers: [user.userName],
       groupDesc,
-      groupAdmin: [user.userName],
+      groupAdmin: [user.id],
       date: Date.now(),
     });
 
@@ -55,7 +55,11 @@ groupRouter.post("/creategroup", fetchUser, async (req, res) => {
       { new: true }
     );
     //TODO:Send Unique Group Passcode as response
-    res.status(201).send(group.groupPasscode);
+    res.status(201).send({
+      success: true,
+      message: "Group Created Successfully",
+      groupPasscode: group.groupPasscode,
+    });
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
@@ -107,9 +111,26 @@ groupRouter.put("/updategroup", async (req, res) => {
 
 //Delete group
 //TODO: Validate user id
-groupRouter.delete("/deletegroup", async (req, res) => {
+groupRouter.delete("/deletegroup", fetchUser, async (req, res) => {
   try {
-    res.send("Delete Group");
+    const user = await getUser(req);
+    // Find and delete the group if the user is the admin
+    const group = await GroupSchema.findOneAndDelete({
+      _id: req.body?.groupId,
+      groupAdmin: { $in: [user.id] },
+    });
+
+    if (!group) {
+      return res.status(403).json({
+        error: "Forbidden",
+        message:
+          "You are not authorized to delete this group or it does not exist.",
+      });
+    }
+
+    res
+      .status(200)
+      .send({ success: true, message: "Group deleted successfully." });
   } catch (error) {
     return res.status(500).json({
       error: "Server error",
