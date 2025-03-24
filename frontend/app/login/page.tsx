@@ -48,7 +48,7 @@ export default function Login() {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Your email<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -63,7 +63,7 @@ export default function Login() {
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Password
+                  Password<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
