@@ -62,12 +62,10 @@ const HomePage = () => {
 
       {/* Main Content */}
 
-      <div
-        className="d-flex gap-2 bg-dark text-white"
-        style={{ height: "calc(100vh - 90px)" }}
-      >
-        <div className="w-25 p-3 d-flex flex-column align-items-middle justify-content-center">
-          <h2 className="fs-4 fw-bold text-center">User Overview</h2>
+      <div className="flex flex-col sm:flex-row gap-4 bg-dark text-white p-2 h-[calc(100vh-100px)]">
+        {/* User Overview - Takes full height and prevents overflow */}
+        <div className="w-full sm:w-1/3 flex flex-col items-center justify-center h-full overflow-hidden">
+          <h2 className="text-lg font-bold text-center">User Overview</h2>
           {userLoading ? (
             <Loader />
           ) : (
@@ -75,8 +73,9 @@ const HomePage = () => {
           )}
         </div>
 
-        <div className="w-75 p-3 d-flex flex-column ">
-          <h2 className="fs-4 fw-bold text-center">Group Overview</h2>
+        {/* Group Overview - Also takes full height */}
+        <div className="w-full sm:w-2/3  flex flex-col h-full overflow-hidden">
+          <h2 className="text-lg font-bold text-center">Group Overview</h2>
           {groupLoading ? <Loader /> : <GroupView groups={groups} />}
         </div>
       </div>
