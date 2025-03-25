@@ -10,6 +10,10 @@ export const JOIN_GROUP_REQUEST = "JOIN_GROUP_REQUEST";
 export const JOIN_GROUP_SUCCESS = "JOIN_GROUP_SUCCESS";
 export const JOIN_GROUP_FAILURE = "JOIN_GROUP_FAILURE";
 
+export const DELETE_GROUP_REQUEST = "DELETE_GROUP_REQUEST";
+export const DELETE_GROUP_SUCCESS = "DELETE_GROUP_SUCCESS";
+export const DELETE_GROUP_FAILURE = "DELETE_GROUP_FAILURE";
+
 export const fetchGroupRequest = () => ({
   type: FETCH_GROUP_REQUEST,
 });
@@ -47,6 +51,19 @@ export const joinGroupSuccess = () => ({
 
 export const joinGroupFailure = (error) => ({
   type: JOIN_GROUP_FAILURE,
+  payload: error,
+});
+
+export const deleteGroupRequest = () => ({
+  type: DELETE_GROUP_REQUEST,
+});
+
+export const deleteGroupSuccess = () => ({
+  type: DELETE_GROUP_SUCCESS,
+});
+
+export const deleteGroupFailure = (error) => ({
+  type: DELETE_GROUP_FAILURE,
   payload: error,
 });
 const baseURL = process.env.REACT_APP_BASE_URL;
@@ -119,6 +136,32 @@ export const joinGroup = (groupPasscode) => {
       dispatch(fetchGroups());
     } catch (error) {
       dispatch(joinGroupFailure(error.message));
+    }
+  };
+};
+
+export const deleteGroup = (groupId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteGroupRequest());
+      const url = baseURL + "/api/v1/groups/deletegroup";
+      const authToken = localStorage.getItem("auth-token");
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": authToken,
+        },
+        body: JSON.stringify(groupId),
+      });
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+      dispatch(deleteGroupSuccess());
+      dispatch(fetchGroups());
+    } catch (error) {
+      dispatch(deleteGroupFailure());
     }
   };
 };
