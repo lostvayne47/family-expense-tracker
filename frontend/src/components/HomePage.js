@@ -23,7 +23,7 @@ const HomePage = () => {
   const { user, loading } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchUser()); // Fetch user data when the component loads
-  }, []);
+  }, [dispatch]);
 
   return (
     <div
