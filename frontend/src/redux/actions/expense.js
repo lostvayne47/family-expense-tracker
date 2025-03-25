@@ -209,7 +209,7 @@ export const fetchGroupExpenses = (groupId) => {
         },
       });
       const data = await response.json();
-      dispatch(fetchExpensesSuccess(data));
+      dispatch(fetchExpensesSuccess(data?.expenses));
     } catch (error) {
       dispatch(fetchExpensesFailure(error.message));
     }
