@@ -7,7 +7,7 @@ import { fetchGroups } from "../redux/actions/groups.js";
 import Loader from "./Loader.js";
 import "../css/home.css";
 import UserView from "./UserView.js";
-import GroupView from "./GroupView.js";
+import GroupSection from "./GroupSection.js";
 import Popup from "./Popup.js";
 import { fetchExpenses } from "../redux/actions/expense.js";
 const Home = () => {
@@ -88,7 +88,7 @@ const Home = () => {
         {/* Group Overview - Also takes full height */}
         <div className="w-full sm:w-3/4  flex flex-col h-full overflow-hidden">
           <h2 className="text-lg font-bold text-center">Group Overview</h2>
-          {groupLoading ? <Loader /> : <GroupView groups={groups} />}
+          {groupLoading ? <Loader /> : <GroupSection groups={groups} />}
         </div>
       </div>
     </div>
