@@ -15,7 +15,7 @@ import {
 } from "../actions/groups.js";
 
 const initialState = {
-  groups: null, // Will store user data
+  groups: [], // Will store user data
   groupLoading: false, // Tracks API loading state
   groupError: null, // Stores any errors
   groupSuccess: null, // Stores any successful info
