@@ -198,7 +198,7 @@ export const deleteExpense = (expenseId) => {
 export const fetchGroupExpenses = (groupId) => {
   return async (dispatch) => {
     try {
-      dispatch(fetchExpensesRequest());
+      dispatch(fetchGroupExpensesRequest());
       const url = baseURL + `/api/v1/expenses/groupexpenses/${groupId}`;
       const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
@@ -209,9 +209,9 @@ export const fetchGroupExpenses = (groupId) => {
         },
       });
       const data = await response.json();
-      dispatch(fetchExpensesSuccess(data?.expenses));
+      dispatch(fetchGroupExpensesSuccess(data?.expenses));
     } catch (error) {
-      dispatch(fetchExpensesFailure(error.message));
+      dispatch(fetchGroupExpensesFailure(error.message));
     }
   };
 };
