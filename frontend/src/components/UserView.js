@@ -1,5 +1,6 @@
 import React from "react";
 import JoinGroup from "./JoinGroup";
+import CreateGroup from "./CreateGroup";
 
 export default function UserView({ userData, groups }) {
   let groupList = groups.reduce((acc, group) => {
@@ -31,11 +32,11 @@ export default function UserView({ userData, groups }) {
             {userData?.userExpenses.join(" ") || ""}
           </p>
         </div>
-        <div className="container h-25 my-5 d-flex justify-content-center align-items-center border">
+        <div className="container h-30 p-2 my-5 d-flex rounded bg-gray-700 justify-content-center align-items-center border">
           <JoinGroup />
         </div>
-        <div className="container h-25 my-5 d-flex justify-content-center align-items-center border">
-          <JoinGroup />
+        <div className="container h-45 p-2 my-3 d-flex rounded bg-gray-700 justify-content-center align-items-center border">
+          <CreateGroup />
         </div>
       </div>
     </div>

@@ -9,18 +9,26 @@ export default function JoinGroup() {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="joinGroup" style={{ display: "block" }}>
-          Join Group
+        <label
+          htmlFor="joinGroup"
+          className="text-white"
+          style={{ display: "block" }}
+        >
+          <b>Join Group</b>
         </label>
         <input
-          className="p-1"
+          className="p-1 my-2 rounded w-100"
           id="joinGroup"
           type="text"
           placeholder="Enter your group code"
           value={passcode}
           onChange={handleChange}
         />
-        <button className="btn btn-primary mx-3" type="submit">
+        <button
+          className="btn btn-primary"
+          style={{ display: "block" }}
+          type="submit"
+        >
           Join
         </button>
       </form>
