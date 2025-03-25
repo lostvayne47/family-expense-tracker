@@ -8,26 +8,6 @@ export default function GroupView() {
       <Group />
       <Group />
       <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
-      <Group />
     </div>
   );
 }
