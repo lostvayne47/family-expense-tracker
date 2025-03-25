@@ -22,6 +22,7 @@ const initialState = {
   expenseLoading: false,
   expenseError: null,
   expenseSuccess: null,
+  groupExpenses: [],
 };
 
 const expenseReducer = (state = initialState, action) => {
