@@ -15,7 +15,7 @@ import {
   FETCH_GROUP_EXPENSES_SUCCESS,
   FETCH_GROUP_EXPENSES_FAILURE,
   SHOW_SUCCESS,
-} from "../actions/expenses.js";
+} from "../actions/expense.js";
 
 const initialState = {
   expenses: [],

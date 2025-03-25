@@ -9,6 +9,7 @@ import "../css/home.css";
 import UserView from "./UserView.js";
 import GroupView from "./GroupView.js";
 import Popup from "./Popup.js";
+import { fetchExpenses } from "../redux/actions/expense.js";
 const Home = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
@@ -25,13 +26,16 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchUser()); // Fetch user data when the component loads
-    dispatch(fetchGroups()); // Fetch user data when the component loads
+    dispatch(fetchGroups()); // Fetch group data when the component loads
+    dispatch(fetchExpenses()); // Fetch expense data when the component loads
   }, [dispatch]);
 
   const { user, userLoading, userError } = useSelector((state) => state.user);
   const { groups, groupLoading, groupError, groupSuccess } = useSelector(
     (state) => state.group
   );
+  const { expenses, expenseLoading, expenseError, expenseSuccess } =
+    useSelector((state) => state.expense);
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
@@ -64,9 +68,11 @@ const Home = () => {
 
       {/* Main Content */}
       <Popup
-        showError={userError !== null || groupError !== null}
-        showSuccess={groupSuccess !== null}
-        message={groupSuccess || userError || groupError}
+        showError={
+          userError !== null || groupError !== null || expenseError !== null
+        }
+        showSuccess={groupSuccess !== null || expenseSuccess}
+        message={groupSuccess || userError || groupError || expenseSuccess}
       />
       <div className="flex flex-col sm:flex-row gap-4 bg-dark text-white p-2 h-[calc(100vh-100px)]">
         {/* User Overview - Takes full height and prevents overflow */}
