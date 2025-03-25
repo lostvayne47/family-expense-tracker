@@ -2,6 +2,8 @@ import { MdDateRange } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
 import { MdOutlineDescription } from "react-icons/md";
 import { PiMoneyFill } from "react-icons/pi";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const formatDate = (isoString) => {
   const date = new Date(isoString);
@@ -43,6 +45,9 @@ export default function ExpenseList({ expenses }) {
     0
   );
   expenses = formatAndSortExpenses(expenses);
+
+  function handleDelete() {}
+  function handleEdit() {}
   return (
     <div className="max-w-3xl w-full mx-auto bg-gray-700 p-4 rounded-lg shadow-xl">
       <h3 className="text-2xl font-bold mb-4 text-center">Expense List</h3>
@@ -50,28 +55,42 @@ export default function ExpenseList({ expenses }) {
       <div className="h-[350px] overflow-y-auto border border-gray-300 rounded-lg p-3 space-y-6">
         {expenses.length > 0 ? (
           expenses.map((expense, index) => (
-            <div
-              key={index}
-              className="p-3 bg-gray-100 text-black rounded-lg shadow-md flex flex-wrap justify-between items-center text-l hover:bg-cyan-300"
-            >
-              <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
-                <MdDateRange size={30} />
-                <p>{expense.expenseDateFormatted}</p>
+            <div>
+              <div className="flex justify-end justify-between gap-3 my-1 ">
+                <FaRegEdit
+                  className="hover:scale-125 hover:text-green-400 cursor-pointer"
+                  size={18}
+                  onClick={handleEdit}
+                />
+                <MdDeleteForever
+                  className="hover:scale-125 hover:text-red-400 cursor-pointer"
+                  size={18}
+                  onClick={handleDelete}
+                />
               </div>
+              <div
+                key={index}
+                className="p-3 bg-gray-100 text-black rounded-lg shadow-md flex flex-wrap justify-between items-center text-l hover:bg-cyan-300"
+              >
+                <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
+                  <MdDateRange size={30} />
+                  <p>{expense.expenseDateFormatted}</p>
+                </div>
 
-              <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
-                <IoPerson size={30} />
-                <p>{expense.expenseOwner}</p>
-              </div>
+                <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
+                  <IoPerson size={30} />
+                  <p>{expense.expenseOwner}</p>
+                </div>
 
-              <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
-                <MdOutlineDescription size={30} />
-                <p>{expense.expenseName}</p>
-              </div>
+                <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
+                  <MdOutlineDescription size={30} />
+                  <p>{expense.expenseName}</p>
+                </div>
 
-              <div className="font-semibold w-full md:w-1/4 flex items-center gap-2 text-xl text-red-600">
-                <PiMoneyFill size={30} color="black" />
-                <p>₹{expense.expenseAmount}</p>
+                <div className="font-semibold w-full md:w-1/4 flex items-center gap-2 text-xl text-red-600">
+                  <PiMoneyFill size={30} color="black" />
+                  <p>₹{expense.expenseAmount}</p>
+                </div>
               </div>
             </div>
           ))
