@@ -44,17 +44,15 @@ export default function ExpenseList({ expenses }) {
   );
   expenses = formatAndSortExpenses(expenses);
   return (
-    <div className="max-w-3xl w-full mx-auto bg-white p-4 rounded-lg shadow-xl">
-      <h3 className="text-2xl font-bold mb-4 text-center text-black">
-        Expense List
-      </h3>
+    <div className="max-w-3xl w-full mx-auto bg-gray-700 p-4 rounded-lg shadow-xl">
+      <h3 className="text-2xl font-bold mb-4 text-center">Expense List</h3>
       {/* Scrollable List Container */}
       <div className="h-[350px] overflow-y-auto border border-gray-300 rounded-lg p-3 space-y-6">
         {expenses.length > 0 ? (
           expenses.map((expense, index) => (
             <div
               key={index}
-              className="p-3 bg-gray-100 text-black rounded-lg shadow-md flex flex-wrap justify-between items-center text-l"
+              className="p-3 bg-gray-100 text-black rounded-lg shadow-md flex flex-wrap justify-between items-center text-l hover:bg-cyan-300"
             >
               <div className="font-semibold w-full md:w-1/4 flex items-center gap-2">
                 <MdDateRange size={30} />
