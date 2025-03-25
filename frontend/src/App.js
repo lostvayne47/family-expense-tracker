@@ -1,7 +1,7 @@
-import LandingPage from "./components/LandingPage";
-import SignupPage from "./components/SignupPage.js";
-import LoginPage from "./components/LoginPage.js";
-import HomePage from "./components/HomePage.js";
+import Landing from "./components/Landing";
+import Signup from "./components/Signup.js";
+import Login from "./components/Login.js";
+import Home from "./components/Home.js";
 import { ThemeProvider } from "./components/ThemeProvider.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import { Provider } from "react-redux";
@@ -14,10 +14,10 @@ function App() {
         <Router>
           <ThemeProvider>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/home" element={<HomePage />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/home" element={<Home />} />
             </Routes>
           </ThemeProvider>
         </Router>

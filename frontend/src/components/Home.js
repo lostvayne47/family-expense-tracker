@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./ThemeProvider.js";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../redux/actions/user.js";
 import { fetchGroups } from "../redux/actions/groups.js";
 import Loader from "./Loader.js";
 import "../css/home.css";
-import UserView from "../components/UserView.js";
+import UserView from "./UserView.js";
 import GroupView from "./GroupView.js";
 import Popup from "./Popup.js";
-const HomePage = () => {
+const Home = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
 
@@ -89,4 +89,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

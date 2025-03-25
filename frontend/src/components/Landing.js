@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
-const LandingPage = () => {
+const Landing = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
 
@@ -66,4 +66,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Landing;

@@ -1,49 +1,27 @@
 import React, { useState } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Link, useNavigate } from "react-router";
-import { createUser } from "../api/user";
+import { loginUser } from "../api/user";
 
-const SignupPage = () => {
+const Login = () => {
   const { darkMode } = useTheme();
-  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
   const navigate = useNavigate();
-  const isFormValid =
-    fullName.trim().length >= 3 &&
-    email.trim() !== "" &&
-    password.length >= 8 &&
-    confirmPassword.trim() !== "" &&
-    password === confirmPassword;
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    e.target.setCustomValidity(
-      e.target.value === password ? "" : "Passwords do not match"
-    );
-    e.target.reportValidity();
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
-      userName: fullName,
       userEmail: email,
       userPassword: password,
     };
-
-    const status = await createUser(payload);
+    const status = await loginUser(payload);
     if (status?.success) {
-      navigate("/login");
+      navigate("/home");
     } else {
-      setError(status?.message || "Something went wrong");
+      setError(status?.message);
     }
   };
 
@@ -58,25 +36,9 @@ const SignupPage = () => {
           darkMode ? "bg-gray-800" : "bg-gray-100"
         }`}
       >
-        <h2 className="text-3xl font-extrabold text-center mb-6">Sign Up</h2>
+        <h2 className="text-3xl font-extrabold text-center mb-6">Login</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <label className="block text-sm font-bold">
-            Full Name <span className="text-red-500">*</span>
-            <input
-              type="text"
-              placeholder="Full Name (at least 3 characters)"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                darkMode
-                  ? "border-gray-600 bg-gray-700 text-white"
-                  : "border-gray-300 bg-white text-black"
-              }`}
-              autoComplete="username"
-              required
-            />
-          </label>
           <label className="block text-sm font-bold">
             Email <span className="text-red-500">*</span>
             <input
@@ -89,7 +51,7 @@ const SignupPage = () => {
                   ? "border-gray-600 bg-gray-700 text-white"
                   : "border-gray-300 bg-white text-black"
               }`}
-              autoComplete="Email"
+              autoComplete="email"
               required
             />
           </label>
@@ -97,25 +59,9 @@ const SignupPage = () => {
             Password <span className="text-red-500">*</span>
             <input
               type="password"
-              placeholder="Password (at least 8 characters)"
+              placeholder="Password"
               value={password}
-              onChange={handlePasswordChange}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                darkMode
-                  ? "border-gray-600 bg-gray-700 text-white"
-                  : "border-gray-300 bg-white text-black"
-              }`}
-              autoComplete="new-password"
-              required
-            />
-          </label>
-          <label className="block text-sm font-bold">
-            Confirm Password <span className="text-red-500">*</span>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
               className={`w-full px-4 py-2 rounded-lg border ${
                 darkMode
                   ? "border-gray-600 bg-gray-700 text-white"
@@ -136,13 +82,13 @@ const SignupPage = () => {
                 : "bg-gray-400 cursor-not-allowed"
             }`}
           >
-            Create Account
+            Log In
           </button>
         </form>
         <p className="text-center mt-4">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-400 hover:underline">
-            Login
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-400 hover:underline">
+            Sign Up
           </Link>
         </p>
       </div>
@@ -150,4 +96,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default Login;
