@@ -5,7 +5,7 @@ import CreateGroup from "./CreateGroup";
 export default function UserView({ userData, groups, expenses }) {
   let groupList = groups?.map((group) => group.groupName).join(", ") || "";
   const totalAmount = expenses
-    .filter((e) => e.ownerId === userData._id)
+    .filter((e) => e.expenseOwnerId === userData._id)
     .reduce((sum, expense) => sum + expense.expenseAmount, 0);
   return (
     <div className="h-100 flex  items-center justify-center text-gray-300 overflow-auto">
