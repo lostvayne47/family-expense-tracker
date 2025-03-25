@@ -1,4 +1,18 @@
-export default function GroupView({ showModal, setShowModal }) {
+import ExpenseList from "./ExpenseList";
+
+const test = [
+  { name: "Groceries", amount: 150 },
+  { name: "Electricity Bill", amount: 275 },
+  { name: "Internet", amount: 999 },
+  { name: "Gas", amount: 430 },
+  { name: "Coffee", amount: 250 },
+  { name: "Movie", amount: 120 },
+  { name: "Dinner", amount: 600 },
+  { name: "Gym", amount: 250 },
+  { name: "Vacation Savings", amount: 3000 },
+  { name: "Car Loan", amount: 2200 },
+];
+export default function GroupView({ showModal, setShowModal, groupData }) {
   return (
     <>
       {showModal && (
@@ -8,15 +22,21 @@ export default function GroupView({ showModal, setShowModal }) {
         >
           {/* Modal Content */}
           <div
-            className="bg-white p-6 rounded-lg shadow-lg w-96 transition-transform transform scale-95 animate-fadeIn"
+            className="bg-gray-800 p-6 rounded-lg shadow-lg w-75 transition-transform transform scale-95 animate-fadeIn"
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
-            <h2 className="text-xl font-semibold">Modal Title</h2>
-            <p className="mt-2 text-gray-600">
-              This is a sample modal in Tailwind.
-            </p>
+            <div className="d-flex justify-content-between">
+              <h2 className="text-xl font-semibold">{groupData?.groupName}</h2>
+              <h2 className="text-xl font-semibold">
+                Members: {groupData?.groupMembers?.length}
+              </h2>
+            </div>
+            <div className="mt-2">
+              {/* <ExpenseList expenses={groupData?.groupExpenses} /> */}
+              <ExpenseList expenses={test} />
+            </div>
 
             {/* Close Modal Button */}
             <div className="mt-4 flex justify-end">

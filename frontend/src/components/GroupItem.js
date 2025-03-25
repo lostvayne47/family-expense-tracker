@@ -38,7 +38,11 @@ export default function GroupItem({ group }) {
           <MdDeleteForever size={20} color="red" />
         </div>
       </div>
-      <GroupView showModal={showModal} setShowModal={setShowModal} />
+      <GroupView
+        showModal={showModal}
+        setShowModal={setShowModal}
+        groupData={group}
+      />
     </>
   );
 }
