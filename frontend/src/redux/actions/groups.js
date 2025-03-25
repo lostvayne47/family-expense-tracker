@@ -172,7 +172,7 @@ export const deleteGroup = (groupId) => {
       dispatch(fetchGroups());
       dispatch(showSuccess(data?.message));
     } catch (error) {
-      dispatch(deleteGroupFailure());
+      dispatch(deleteGroupFailure(error.message));
     }
   };
 };
