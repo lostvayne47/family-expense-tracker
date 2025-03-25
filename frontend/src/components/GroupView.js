@@ -1,67 +1,5 @@
 import ExpenseList from "./ExpenseList";
 
-const test = [
-  {
-    expenseOwner: "Aayush",
-    expenseName: "Groceries",
-    expenseAmount: 150,
-    expenseDate: "2025-03-20",
-  },
-  {
-    expenseOwner: "Priya",
-    expenseName: "Electricity Bill",
-    expenseAmount: 275,
-    expenseDate: "2025-03-18",
-  },
-  {
-    expenseOwner: "Rohan",
-    expenseName: "Internet",
-    expenseAmount: 999,
-    expenseDate: "2025-03-15",
-  },
-  {
-    expenseOwner: "Meera",
-    expenseName: "Gas",
-    expenseAmount: 430,
-    expenseDate: "2025-03-12",
-  },
-  {
-    expenseOwner: "Vikram",
-    expenseName: "Coffee",
-    expenseAmount: 250,
-    expenseDate: "2025-03-22",
-  },
-  {
-    expenseOwner: "Ananya",
-    expenseName: "Movie",
-    expenseAmount: 120,
-    expenseDate: "2025-03-10",
-  },
-  {
-    expenseOwner: "Siddharth",
-    expenseName: "Dinner",
-    expenseAmount: 600,
-    expenseDate: "2025-03-21",
-  },
-  {
-    expenseOwner: "Neha",
-    expenseName: "Gym",
-    expenseAmount: 250,
-    expenseDate: "2025-03-05",
-  },
-  {
-    expenseOwner: "Karan",
-    expenseName: "Vacation Savings",
-    expenseAmount: 3000,
-    expenseDate: "2025-03-01",
-  },
-  {
-    expenseOwner: "Ishita",
-    expenseName: "Car Loan",
-    expenseAmount: 2200,
-    expenseDate: "2025-03-07",
-  },
-];
 export default function GroupView({ showModal, setShowModal, groupData }) {
   return (
     <>
@@ -84,8 +22,7 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
               </h2>
             </div>
             <div className="mt-2">
-              {/* <ExpenseList expenses={groupData?.groupExpenses} /> */}
-              <ExpenseList expenses={test} />
+              <ExpenseList groupExpenses={groupData?.groupExpenses} />
             </div>
 
             {/* Close Modal Button */}
