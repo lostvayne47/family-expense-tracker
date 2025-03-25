@@ -1,6 +1,6 @@
 import React from "react";
 import GroupItem from "./GroupItem.js";
-export default function GroupView({ groups }) {
+export default function GroupSection({ groups }) {
   return (
     <div className="min-h-[200px] d-flex flex-wrap gap-2 justify-content-center overflow-auto">
       {groups?.length === 0 ? (
