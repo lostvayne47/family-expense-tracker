@@ -81,7 +81,7 @@ const Home = () => {
           {userLoading ? (
             <Loader />
           ) : (
-            <UserView userData={user} groups={groups} />
+            <UserView userData={user} expenses={expenses} groups={groups} />
           )}
         </div>
 

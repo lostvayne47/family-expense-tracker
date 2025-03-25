@@ -2,8 +2,11 @@ import React from "react";
 import JoinGroup from "./JoinGroup";
 import CreateGroup from "./CreateGroup";
 
-export default function UserView({ userData, groups }) {
+export default function UserView({ userData, groups, expenses }) {
   let groupList = groups?.map((group) => group.groupName).join(", ") || "";
+  const totalAmount = expenses
+    .filter((e) => e.ownerId === userData._id)
+    .reduce((sum, expense) => sum + expense.expenseAmount, 0);
   return (
     <div className="h-100 flex  items-center justify-center text-gray-300 overflow-auto">
       <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-3  border border-gray-700 overflow-auto d-flex flex-column gap-1 justify-content-evenly align-items-between">
@@ -35,7 +38,7 @@ export default function UserView({ userData, groups }) {
           <div>
             <p>
               <span className="font-bold text-gray-300">Total Expenses:</span>{" "}
-              {userData?.userExpenses.join(" ") || ""}
+              {totalAmount || ""}
             </p>
           </div>
         </div>
