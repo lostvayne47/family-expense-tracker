@@ -9,7 +9,9 @@ export default function JoinGroup() {
   function handleChange(event) {
     setPasscode(event.target.value);
   }
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
+
     if (passcode !== "") {
       dispatch(joinGroup({ groupPasscode: passcode }));
     }

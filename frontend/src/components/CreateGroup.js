@@ -8,18 +8,22 @@ export default function CreateGroup() {
     groupName: "",
     groupDesc: "",
   });
+
   function handleChange(event) {
-    setState((state) => ({
-      ...state,
+    setState((prevState) => ({
+      ...prevState,
       [event.target.name]: event.target.value,
     }));
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault(); // Prevents form submission & page reload
+
     if (state.groupName !== "" && state.groupDesc !== "") {
       dispatch(createGroup(state));
     }
   }
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
@@ -36,7 +40,7 @@ export default function CreateGroup() {
           name="groupName"
           type="text"
           placeholder="Enter your group name"
-          value={state.name}
+          value={state.groupName} // Fixed
           onChange={handleChange}
         />
         <input
@@ -45,7 +49,7 @@ export default function CreateGroup() {
           name="groupDesc"
           type="text"
           placeholder="Enter your group description"
-          value={state.desc}
+          value={state.groupDesc} // Fixed
           onChange={handleChange}
         />
         <button
