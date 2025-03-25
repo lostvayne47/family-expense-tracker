@@ -60,7 +60,7 @@ export default function ExpenseList({ groupId }) {
       {/* Total Amount Section */}
       <div className="mt-6 p-3 bg-gray-200 text-black rounded-lg shadow-md flex justify-between items-center text-xl font-bold">
         <span>Total</span>
-        <span className="text-red-600 text-xl">₹{totalAmount}</span>
+        <span className="text-red-600 text-2xl">₹{totalAmount}</span>
       </div>
     </div>
   );
