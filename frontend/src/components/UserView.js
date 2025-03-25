@@ -3,7 +3,7 @@ import JoinGroup from "./JoinGroup";
 import CreateGroup from "./CreateGroup";
 
 export default function UserView({ userData, groups }) {
-  let groupList = groups.reduce((acc, group) => {
+  let groupList = groups?.reduce((acc, group) => {
     return acc + " " + group.groupName;
   }, ""); // Providing an initial value
 
