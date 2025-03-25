@@ -39,12 +39,12 @@ export const fetchGroups = () => {
     try {
       dispatch(fetchGroupRequest()); // Show loading
       const url = baseURL + "/api/v1/groups/getusergroups";
-      const autToken = localStorage.getItem("auth-token");
+      const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": autToken,
+          "auth-token": authToken,
         },
       });
       const data = await response.json();
@@ -60,12 +60,12 @@ export const createGroup = (groupData) => {
     try {
       dispatch(createGroupRequest());
       const url = baseURL + "/api/v1/groups/creategroup";
-      const autToken = localStorage.getItem("auth-token");
+      const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          "auth-token": autToken,
+          "auth-token": authToken,
         },
         body: JSON.stringify(groupData),
       });
