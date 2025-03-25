@@ -5,6 +5,9 @@ import {
   CREATE_GROUP_REQUEST,
   CREATE_GROUP_SUCCESS,
   CREATE_GROUP_FAILURE,
+  JOIN_GROUP_REQUEST,
+  JOIN_GROUP_SUCCESS,
+  JOIN_GROUP_FAILURE,
 } from "../actions/groups.js";
 
 const initialState = {
@@ -26,6 +29,12 @@ const groupReducer = (state = initialState, action) => {
     case CREATE_GROUP_SUCCESS:
       return { ...state, groupLoading: false };
     case CREATE_GROUP_FAILURE:
+      return { ...state, groupLoading: false, error: action.payload }; // Store error message
+    case JOIN_GROUP_REQUEST:
+      return { ...state, groupLoading: true, error: null }; // Set loading state
+    case JOIN_GROUP_SUCCESS:
+      return { ...state, groupLoading: false };
+    case JOIN_GROUP_FAILURE:
       return { ...state, groupLoading: false, error: action.payload }; // Store error message
     default:
       return state;

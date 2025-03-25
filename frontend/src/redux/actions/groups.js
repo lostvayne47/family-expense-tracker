@@ -6,6 +6,10 @@ export const CREATE_GROUP_REQUEST = "CREATE_GROUP_REQUEST";
 export const CREATE_GROUP_SUCCESS = "CREATE_GROUP_SUCCESS";
 export const CREATE_GROUP_FAILURE = "CREATE_GROUP_FAILURE";
 
+export const JOIN_GROUP_REQUEST = "JOIN_GROUP_REQUEST";
+export const JOIN_GROUP_SUCCESS = "JOIN_GROUP_SUCCESS";
+export const JOIN_GROUP_FAILURE = "JOIN_GROUP_FAILURE";
+
 export const fetchGroupRequest = () => ({
   type: FETCH_GROUP_REQUEST,
 });
@@ -33,6 +37,18 @@ export const createGroupFailure = (error) => ({
   payload: error,
 });
 
+export const joinGroupRequest = () => ({
+  type: JOIN_GROUP_REQUEST,
+});
+
+export const joinGroupSuccess = () => ({
+  type: JOIN_GROUP_SUCCESS,
+});
+
+export const joinGroupFailure = (error) => ({
+  type: JOIN_GROUP_FAILURE,
+  payload: error,
+});
 const baseURL = process.env.REACT_APP_BASE_URL;
 export const fetchGroups = () => {
   return async (dispatch) => {
@@ -71,11 +87,36 @@ export const createGroup = (groupData) => {
       });
       const data = await response.json();
       if (!data.success) {
-        throw new Error("Request failed");
+        throw new Error(data.message);
       }
       dispatch(createGroupSuccess());
     } catch (error) {
       dispatch(createGroupFailure(error.message));
+    }
+  };
+};
+
+export const joinGroup = (groupPasscode) => {
+  return async (dispatch) => {
+    try {
+      dispatch(joinGroupRequest());
+      const url = baseURL + "/api/v1/groups/joingroup";
+      const authToken = localStorage.getItem("auth-token");
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": authToken,
+        },
+        body: JSON.stringify(groupPasscode),
+      });
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+      dispatch(joinGroupSuccess());
+    } catch (error) {
+      dispatch(joinGroupFailure(error.message));
     }
   };
 };

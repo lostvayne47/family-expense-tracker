@@ -1,11 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { joinGroup } from "../redux/actions/groups";
 
 export default function JoinGroup() {
   const [passcode, setPasscode] = useState("");
+  const dispatch = useDispatch();
+
   function handleChange(event) {
     setPasscode(event.target.value);
   }
-  function handleSubmit() {}
+  function handleSubmit() {
+    if (passcode !== "") {
+      dispatch(joinGroup({ groupPasscode: passcode }));
+    }
+  }
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
