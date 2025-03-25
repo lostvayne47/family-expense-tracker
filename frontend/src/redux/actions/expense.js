@@ -195,11 +195,11 @@ export const deleteExpense = (expenseId) => {
   };
 };
 
-export const fetchGroupExpenses = () => {
+export const fetchGroupExpenses = (groupId) => {
   return async (dispatch) => {
     try {
       dispatch(fetchExpensesRequest());
-      const url = baseURL + "/api/v1/expenses/groupexpenses/:groupId";
+      const url = baseURL + `/api/v1/expenses/groupexpenses/${groupId}`;
       const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "GET",
