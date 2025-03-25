@@ -30,7 +30,6 @@ const HomePage = () => {
 
   const { user, userLoading } = useSelector((state) => state.user);
   const { groups, groupLoading } = useSelector((state) => state.group);
-  console.log(groups);
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
