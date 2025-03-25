@@ -25,11 +25,12 @@ const formatAndSortExpenses = (expenses) => {
   return formattedExpenses;
 };
 export default function ExpenseList({ groupExpenses }) {
-  // Calculate total sum
-  const totalAmount = groupExpenses.reduce(
-    (sum, expense) => sum + expense.expenseAmount,
-    0
-  );
+  // // Calculate total sum
+  // const totalAmount = groupExpenses.reduce(
+  //   (sum, expense) => sum + expense.expenseAmount,
+  //   0
+  // );
+  const totalAmount = 0;
   groupExpenses = formatAndSortExpenses(groupExpenses);
   return (
     <div className="max-w-3xl w-full mx-auto bg-gray-700 p-4 rounded-lg shadow-xl">

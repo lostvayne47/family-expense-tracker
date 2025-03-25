@@ -22,7 +22,7 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
               </h2>
             </div>
             <div className="mt-2">
-              <ExpenseList groupExpenses={groupData?.groupExpenses} />
+              <ExpenseList groupId={groupData?._id} />
             </div>
 
             {/* Close Modal Button */}
