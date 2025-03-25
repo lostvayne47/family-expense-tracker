@@ -8,7 +8,7 @@ export default function UserView({ userData, groups }) {
   }, ""); // Providing an initial value
 
   return (
-    <div className="h-100 flex p-3 items-center justify-center text-gray-300 overflow-auto">
+    <div className="h-100 flex  items-center justify-center text-gray-300 overflow-auto">
       <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-3  border border-gray-700 overflow-auto d-flex flex-column  justify-content-evenly align-items-between">
         <div className="container p-2 gap-2 d-flex flex-column justify-content-evenly">
           <div>
