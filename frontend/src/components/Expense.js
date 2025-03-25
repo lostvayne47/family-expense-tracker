@@ -40,7 +40,7 @@ export default function Expense({ expense }) {
           <p>{expense.expenseName}</p>
         </div>
 
-        <div className="font-semibold w-full md:w-1/4 flex items-center gap-2 text-xl text-red-600">
+        <div className="font-semibold w-full md:w-1/4 flex items-center gap-2 text-xl">
           <RiMoneyRupeeCircleFill size={30} color="black" />
           <p>{expense.expenseAmount}</p>
         </div>
