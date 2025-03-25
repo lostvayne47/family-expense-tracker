@@ -57,6 +57,11 @@ expensesRouter.post("/createexpense", fetchUser, async (req, res) => {
       { $push: { groupExpenses: newExpense.id } }
     );
 
+    // Add expenseId to the user's userExpenses array
+    await UserSchema.updateOne(
+      { _id: userId },
+      { $push: { userExpenses: newExpense.id } }
+    );
     res.status(201).json({
       success: true,
       message: "Expense created successfully.",
@@ -196,6 +201,11 @@ expensesRouter.delete(
       await GroupSchema.updateOne(
         { _id: expense.expenseGroupId },
         { $pull: { groupExpenses: expenseId } }
+      );
+      // Add expenseId to the user's userExpenses array
+      await UserSchema.updateOne(
+        { _id: userId },
+        { $pull: { userExpenses: expenseId } }
       );
 
       // Delete the expense
