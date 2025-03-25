@@ -17,7 +17,7 @@ export default function JoinGroup() {
           <b>Join Group</b>
         </label>
         <input
-          className="p-1 my-2 rounded w-100"
+          className="p-1 my-2 rounded w-100 text-black"
           id="joinGroup"
           type="text"
           placeholder="Enter your group code"

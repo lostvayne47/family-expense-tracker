@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createGroup } from "../redux/actions/groups";
 
 export default function CreateGroup() {
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     groupName: "",
     groupDesc: "",
@@ -12,7 +15,11 @@ export default function CreateGroup() {
     }));
   }
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    if (state.groupName !== "" && state.groupDesc !== "") {
+      dispatch(createGroup(state));
+    }
+  }
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
@@ -24,7 +31,7 @@ export default function CreateGroup() {
           <b>Create Group</b>
         </label>
         <input
-          className="p-1 my-2 rounded w-100"
+          className="p-1 my-2 rounded w-100 text-black"
           id="groupName"
           name="groupName"
           type="text"
@@ -33,9 +40,9 @@ export default function CreateGroup() {
           onChange={handleChange}
         />
         <input
-          className="p-1 my-2 rounded w-100"
+          className="p-1 my-2 rounded w-100 text-black"
           id="groupDesc"
-          groupDesc="groupDesc"
+          name="groupDesc"
           type="text"
           placeholder="Enter your group description"
           value={state.desc}
