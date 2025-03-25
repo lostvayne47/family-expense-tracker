@@ -2,11 +2,8 @@ import React from "react";
 
 export default function UserView({ userData }) {
   return (
-    <div className="h-100 flex items-center justify-center text-gray-300 ">
+    <div className="h-100 mt-2 flex items-center justify-center text-gray-300 ">
       <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-700">
-        <h2 className="text-2xl font-bold text-gray-100 mb-4">
-          User Information
-        </h2>
         <div className="space-y-3">
           <p>
             <span className="font-semibold text-gray-400">Username:</span>{" "}

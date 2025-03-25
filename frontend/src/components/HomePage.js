@@ -3,6 +3,7 @@ import { useTheme } from "./ThemeProvider";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../redux/actions/user.js";
+import { fetchGroups } from "../redux/actions/groups.js";
 import Loader from "./Loader.js";
 import "../css/home.css";
 import UserView from "../components/UserView.js";
@@ -11,6 +12,7 @@ import GroupView from "./GroupView.js";
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
+
   useEffect(() => {
     const authToken = localStorage.getItem("auth-token");
     if (!authToken) {
@@ -20,10 +22,15 @@ const HomePage = () => {
   }, []);
 
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(fetchUser()); // Fetch user data when the component loads
+    dispatch(fetchGroups()); // Fetch user data when the component loads
   }, [dispatch]);
+
+  const { user, userLoading } = useSelector((state) => state.user);
+  const { group, groupLoading } = useSelector((state) => state.group);
+  console.log(group);
 
   return (
     <div
@@ -56,23 +63,21 @@ const HomePage = () => {
       </nav>
 
       {/* Main Content */}
-      {loading ? (
-        <Loader />
-      ) : (
-        <div
-          class="d-flex gap-2 bg-dark text-white"
-          style={{ height: "calc(100vh - 90px)" }}
-        >
-          <div class="w-25 p-3 d-flex flex-column align-items-middle justify-content-center">
-            <UserView userData={user} />
-          </div>
 
-          <div class="w-75 p-3 d-flex flex-column ">
-            <h2 class="fs-4 fw-bold text-center">Group Overview</h2>
-            <GroupView />
-          </div>
+      <div
+        className="d-flex gap-2 bg-dark text-white"
+        style={{ height: "calc(100vh - 90px)" }}
+      >
+        <div className="w-25 p-3 d-flex flex-column align-items-middle justify-content-center">
+          <h2 className="fs-4 fw-bold text-center">User Overview</h2>
+          {userLoading ? <Loader /> : <UserView userData={user} />}
         </div>
-      )}
+
+        <div className="w-75 p-3 d-flex flex-column ">
+          <h2 className="fs-4 fw-bold text-center">Group Overview</h2>
+          {groupLoading ? <Loader /> : <GroupView />}
+        </div>
+      </div>
     </div>
   );
 };
