@@ -15,6 +15,7 @@ export default function JoinGroup() {
     if (passcode !== "") {
       dispatch(joinGroup({ groupPasscode: passcode }));
     }
+    setPasscode("");
   }
   return (
     <div className="container">

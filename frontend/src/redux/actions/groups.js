@@ -90,6 +90,7 @@ export const createGroup = (groupData) => {
         throw new Error(data.message);
       }
       dispatch(createGroupSuccess());
+      dispatch(fetchGroups());
     } catch (error) {
       dispatch(createGroupFailure(error.message));
     }
@@ -115,6 +116,7 @@ export const joinGroup = (groupPasscode) => {
         throw new Error(data.message);
       }
       dispatch(joinGroupSuccess());
+      dispatch(fetchGroups());
     } catch (error) {
       dispatch(joinGroupFailure(error.message));
     }

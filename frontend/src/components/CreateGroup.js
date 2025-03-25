@@ -22,6 +22,10 @@ export default function CreateGroup() {
     if (state.groupName !== "" && state.groupDesc !== "") {
       dispatch(createGroup(state));
     }
+    setState({
+      groupName: "",
+      groupDesc: "",
+    });
   }
 
   return (
