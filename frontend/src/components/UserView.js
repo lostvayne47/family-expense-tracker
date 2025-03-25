@@ -3,10 +3,7 @@ import JoinGroup from "./JoinGroup";
 import CreateGroup from "./CreateGroup";
 
 export default function UserView({ userData, groups }) {
-  let groupList = groups?.reduce((acc, group) => {
-    return acc + " " + group.groupName;
-  }, ""); // Providing an initial value
-
+  let groupList = groups?.map((group) => group.groupName).join(", ") || "";
   return (
     <div className="h-100 flex  items-center justify-center text-gray-300 overflow-auto">
       <div className=" h-100 w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-3  border border-gray-700 overflow-auto d-flex flex-column gap-1 justify-content-evenly align-items-between">
