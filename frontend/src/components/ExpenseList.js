@@ -43,7 +43,12 @@ export default function ExpenseList({ groupId }) {
   const groupExpensesData = formatAndSortExpenses(groupExpenses);
   return (
     <div className="max-w-3xl w-full mx-auto bg-gray-700 p-4 rounded-lg shadow-xl">
-      <h3 className="text-2xl font-bold mb-4 text-center">Expense List</h3>
+      <h3 className="text-2xl font-bold mb-2 text-center">Expense List</h3>
+      {/* Total Amount Section */}
+      <div className="mt-3 mx-auto mb-2 p-2 bg-gray-200 text-black rounded-md shadow-sm flex justify-between items-center text-lg font-semibold w-40">
+        <div>Total</div>
+        <div className="text-red-600 text-xl">₹{totalAmount}</div>
+      </div>
       {/* Scrollable List Container */}
       <div className="h-[350px] overflow-y-auto border border-gray-300 rounded-lg p-3 space-y-6">
         {groupExpensesData?.length > 0 ? (
@@ -55,12 +60,6 @@ export default function ExpenseList({ groupId }) {
             No expenses added.
           </p>
         )}
-      </div>
-
-      {/* Total Amount Section */}
-      <div className="mt-6 p-3 bg-gray-200 text-black rounded-lg shadow-md flex justify-between items-center text-xl font-bold">
-        <span>Total</span>
-        <span className="text-red-600 text-2xl">₹{totalAmount}</span>
       </div>
     </div>
   );
