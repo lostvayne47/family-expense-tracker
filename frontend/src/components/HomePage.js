@@ -29,9 +29,8 @@ const HomePage = () => {
   }, [dispatch]);
 
   const { user, userLoading } = useSelector((state) => state.user);
-  const { group, groupLoading } = useSelector((state) => state.group);
-  console.log(group);
-
+  const { groups, groupLoading } = useSelector((state) => state.group);
+  console.log(groups);
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
@@ -75,7 +74,7 @@ const HomePage = () => {
 
         <div className="w-75 p-3 d-flex flex-column ">
           <h2 className="fs-4 fw-bold text-center">Group Overview</h2>
-          {groupLoading ? <Loader /> : <GroupView />}
+          {groupLoading ? <Loader /> : <GroupView groups={groups} />}
         </div>
       </div>
     </div>
