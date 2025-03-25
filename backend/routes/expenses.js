@@ -202,6 +202,7 @@ expensesRouter.delete(
         { _id: expense.expenseGroupId },
         { $pull: { groupExpenses: expenseId } }
       );
+
       // Add expenseId to the user's userExpenses array
       await UserSchema.updateOne(
         { _id: userId },
