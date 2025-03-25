@@ -1,4 +1,5 @@
 import React from "react";
+import JoinGroup from "./JoinGroup";
 
 export default function UserView({ userData, groups }) {
   let groupList = groups.reduce((acc, group) => {
@@ -29,6 +30,12 @@ export default function UserView({ userData, groups }) {
             <span className="font-semibold text-gray-400">Total Expenses:</span>{" "}
             {userData?.userExpenses.join(" ") || ""}
           </p>
+        </div>
+        <div className="container h-25 my-5 d-flex justify-content-center align-items-center border">
+          <JoinGroup />
+        </div>
+        <div className="container h-25 my-5 d-flex justify-content-center align-items-center border">
+          <JoinGroup />
         </div>
       </div>
     </div>
