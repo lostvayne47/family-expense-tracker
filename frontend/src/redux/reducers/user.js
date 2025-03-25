@@ -7,17 +7,17 @@ import {
 const initialState = {
   user: null, // Will store user data
   userLoading: false, // Tracks API loading state
-  error: null, // Stores any errors
+  userError: null, // Stores any errors
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER_REQUEST:
-      return { ...state, userLoading: true, error: null }; // Set loading state
+      return { ...state, userLoading: true, userError: null }; // Set loading state
     case FETCH_USER_SUCCESS:
       return { ...state, user: action.payload, userLoading: false }; // Store user data
     case FETCH_USER_FAILURE:
-      return { ...state, userLoading: false, error: action.payload }; // Store error message
+      return { ...state, userLoading: false, userError: action.payload }; // Store error message
     default:
       return state;
   }

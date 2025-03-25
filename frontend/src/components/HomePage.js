@@ -8,7 +8,7 @@ import Loader from "./Loader.js";
 import "../css/home.css";
 import UserView from "../components/UserView.js";
 import GroupView from "./GroupView.js";
-
+import ErrorPopup from "./ErrorPopup.js";
 const HomePage = () => {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
@@ -28,8 +28,10 @@ const HomePage = () => {
     dispatch(fetchGroups()); // Fetch user data when the component loads
   }, [dispatch]);
 
-  const { user, userLoading } = useSelector((state) => state.user);
-  const { groups, groupLoading } = useSelector((state) => state.group);
+  const { user, userLoading, userError } = useSelector((state) => state.user);
+  const { groups, groupLoading, groupError } = useSelector(
+    (state) => state.group
+  );
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
@@ -61,7 +63,10 @@ const HomePage = () => {
       </nav>
 
       {/* Main Content */}
-
+      <ErrorPopup
+        showPopup={userError !== null || groupError !== null}
+        message={userError || groupError}
+      />
       <div className="flex flex-col sm:flex-row gap-4 bg-dark text-white p-2 h-[calc(100vh-100px)]">
         {/* User Overview - Takes full height and prevents overflow */}
         <div className="w-full sm:w-1/4 flex flex-col items-center justify-center h-full overflow-hidden">

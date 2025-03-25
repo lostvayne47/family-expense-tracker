@@ -97,7 +97,7 @@ export const createGroup = (groupData) => {
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
           "auth-token": authToken,
         },
         body: JSON.stringify(groupData),
