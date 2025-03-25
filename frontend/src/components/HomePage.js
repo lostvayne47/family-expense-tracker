@@ -68,7 +68,11 @@ const HomePage = () => {
       >
         <div className="w-25 p-3 d-flex flex-column align-items-middle justify-content-center">
           <h2 className="fs-4 fw-bold text-center">User Overview</h2>
-          {userLoading ? <Loader /> : <UserView userData={user} />}
+          {userLoading ? (
+            <Loader />
+          ) : (
+            <UserView userData={user} groups={groups} />
+          )}
         </div>
 
         <div className="w-75 p-3 d-flex flex-column ">
