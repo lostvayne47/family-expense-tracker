@@ -67,7 +67,7 @@ const HomePage = () => {
             <UserView userData={user} />
           </div>
 
-          <div class="w-75 p-3 d-flex flex-column">
+          <div class="w-75 p-3 d-flex flex-column ">
             <h2 class="fs-4 fw-bold text-center">Group Overview</h2>
             <GroupView />
           </div>
