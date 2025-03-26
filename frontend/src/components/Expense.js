@@ -9,7 +9,6 @@ import { MdDeleteForever } from "react-icons/md";
 export default function Expense({ expense }) {
   function handleDelete() {}
   function handleEdit() {}
-  console.log(expense);
   return (
     <div>
       <div className="flex justify-end justify-between gap-3 my-1 items-center">

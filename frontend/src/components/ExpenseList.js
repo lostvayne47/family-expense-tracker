@@ -41,6 +41,7 @@ export default function ExpenseList({ groupId }) {
   );
 
   const groupExpensesData = formatAndSortExpenses(groupExpenses);
+  function handleAdd() {}
   return (
     <div className="max-w-3xl w-full mx-auto bg-gray-700 p-4 rounded-lg shadow-xl">
       <h3 className="text-2xl font-bold mb-2 text-center">Expense List</h3>
@@ -61,6 +62,13 @@ export default function ExpenseList({ groupId }) {
           </p>
         )}
       </div>
+      <button
+        className="mt-3 mx-auto mb-2 p-1 bg-red-500 text-white rounded-md shadow-sm flex justify-evenly items-center text-lg font-semibold w-40 hover:scale-110"
+        onClick={handleAdd}
+      >
+        <p>Add Expense</p>
+        <p className="text-white text-2xl">+</p>
+      </button>
     </div>
   );
 }
