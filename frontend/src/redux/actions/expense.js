@@ -143,11 +143,11 @@ export const addExpense = (expenseData) => {
   };
 };
 
-export const updateExpense = (expenseId, updatedData) => {
+export const updateExpense = (updatedExpense) => {
   return async (dispatch) => {
     try {
       dispatch(updateExpenseRequest());
-      const url = `${baseURL}/api/v1/expenses/${expenseId}`;
+      const url = `${baseURL}/api/v1/expenses/updateexpense/${updatedExpense._id}`;
       const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "PUT",
@@ -155,7 +155,7 @@ export const updateExpense = (expenseId, updatedData) => {
           "Content-Type": "application/json",
           "auth-token": authToken,
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedExpense),
       });
       const data = await response.json();
       if (!data.success) {
@@ -163,6 +163,7 @@ export const updateExpense = (expenseId, updatedData) => {
       }
       dispatch(updateExpenseSuccess());
       dispatch(fetchExpenses());
+      dispatch(fetchGroupExpenses(updatedExpense?.expenseGroupId));
       dispatch(showExpenseSuccess(data?.message));
     } catch (error) {
       dispatch(updateExpenseFailure(error.message));

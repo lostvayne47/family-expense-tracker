@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addExpense } from "../redux/actions/expense";
+import { addExpense, updateExpense } from "../redux/actions/expense";
 import { useState, useRef, useEffect } from "react";
 
 export default function ExpenseModal({
@@ -29,7 +29,12 @@ export default function ExpenseModal({
       return;
     }
     console.log(expenseData);
-    dispatch(addExpense(expenseData));
+    if (title === "Edit Details") {
+      dispatch(updateExpense(expenseData));
+    } else {
+      dispatch(addExpense(expenseData));
+    }
+
     setShowModal(false);
   }
 
@@ -84,7 +89,7 @@ export default function ExpenseModal({
                 onClick={handleSubmit}
                 className="px-4 py-2 mx-3 bg-green-500 text-white rounded-lg hover:bg-green-600"
               >
-                Add
+                {title === "Edit Details" ? "Edit" : "Add"}
               </button>
               <button
                 onClick={() => setShowModal(false)}
