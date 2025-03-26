@@ -34,8 +34,9 @@ const Home = () => {
   const { groups, groupLoading, groupError, groupSuccess } = useSelector(
     (state) => state.group
   );
-  const { expenses, expenseLoading, expenseError, expenseSuccess } =
-    useSelector((state) => state.expense);
+  const { expenses, expenseError, expenseSuccess } = useSelector(
+    (state) => state.expense
+  );
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
