@@ -31,7 +31,7 @@ export default function ExpenseList({ groupId }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGroupExpenses(groupId));
-  }, [groupId]);
+  }, [dispatch, groupId]);
   const groupExpenses = useSelector((state) => state.expense.groupExpenses);
 
   // Calculate total sum
