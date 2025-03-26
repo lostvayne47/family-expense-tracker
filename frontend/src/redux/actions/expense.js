@@ -170,11 +170,11 @@ export const updateExpense = (expenseId, updatedData) => {
   };
 };
 
-export const deleteExpense = (expenseId) => {
+export const deleteExpense = (expense) => {
   return async (dispatch) => {
     try {
       dispatch(deleteExpenseRequest());
-      const url = `${baseURL}/api/v1/expenses/${expenseId}`;
+      const url = `${baseURL}/api/v1/expenses/deleteexpense/${expense._id}`;
       const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "DELETE",
@@ -189,6 +189,7 @@ export const deleteExpense = (expenseId) => {
       }
       dispatch(deleteExpenseSuccess());
       dispatch(fetchExpenses());
+      dispatch(fetchGroupExpenses(expense.expenseGroupId));
       dispatch(showSuccess(data?.message));
     } catch (error) {
       dispatch(deleteExpenseFailure(error.message));

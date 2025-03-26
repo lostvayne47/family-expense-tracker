@@ -5,9 +5,15 @@ import { MdOutlineDescription } from "react-icons/md";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { deleteExpense } from "../redux/actions/expense";
 
 export default function Expense({ expense }) {
-  function handleDelete() {}
+  const dispatch = useDispatch();
+
+  function handleDelete() {
+    dispatch(deleteExpense(expense));
+  }
   function handleEdit() {}
   return (
     <div>
