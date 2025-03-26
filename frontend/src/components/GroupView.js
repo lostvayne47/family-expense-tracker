@@ -1,4 +1,5 @@
 import ExpenseList from "./ExpenseList";
+import ExpenseChart from "./ExpenseChart";
 
 export default function GroupView({ showModal, setShowModal, groupData }) {
   return (
@@ -6,7 +7,7 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
       {showModal && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 z-50"
-          onClick={() => setShowModal(false)} // Close on overlay click
+          onClick={() => setShowModal(false)}
         >
           {/* Modal Content */}
           <div
@@ -21,8 +22,13 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
                 Members: {groupData?.groupMembers?.length}
               </h2>
             </div>
-            <div className="mt-2">
-              <ExpenseList groupId={groupData._id} />
+            <div className="mt-2 bg-black flex">
+              <div className="w-1/2 p-2">
+                <ExpenseList groupId={groupData._id} />
+              </div>
+              <div className="w-1/2 p-2">
+                <ExpenseChart groupId={groupData._id} />
+              </div>
             </div>
 
             {/* Close Modal Button */}
