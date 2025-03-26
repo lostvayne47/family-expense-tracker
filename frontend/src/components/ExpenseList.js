@@ -3,6 +3,7 @@ import { fetchGroupExpenses } from "../redux/actions/expense";
 import Expense from "./Expense";
 import { useSelector, useDispatch } from "react-redux";
 import ExpenseModal from "./ExpenseModal";
+import Loader from "./Loader.js";
 
 const formatAndSortExpenses = (expenses) => {
   // Helper function to format date
@@ -30,7 +31,7 @@ const formatAndSortExpenses = (expenses) => {
 };
 export default function ExpenseList({ groupId }) {
   const [showModal, setShowModal] = useState(false);
-
+  const expenseLoading = useSelector((state) => state.expense.expenseLoading);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGroupExpenses(groupId));
@@ -58,7 +59,9 @@ export default function ExpenseList({ groupId }) {
         </div>
         {/* Scrollable List Container */}
         <div className="h-[350px] overflow-y-auto border border-gray-300 rounded-lg p-3 space-y-6">
-          {groupExpensesData?.length > 0 ? (
+          {expenseLoading ? (
+            <Loader />
+          ) : groupExpensesData?.length > 0 ? (
             groupExpensesData.map((expense, index) => (
               <Expense expense={expense} key={index} />
             ))
