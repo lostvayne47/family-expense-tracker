@@ -80,6 +80,7 @@ export default function ExpenseList({ groupId }) {
         showModal={showModal}
         setShowModal={setShowModal}
         groupId={groupId}
+        title={"Add Expense"}
       />
     </>
   );

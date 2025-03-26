@@ -1,8 +1,14 @@
 import { useDispatch } from "react-redux";
 import { addExpense } from "../redux/actions/expense";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-export default function ExpenseModal({ showModal, setShowModal, groupId }) {
+export default function ExpenseModal({
+  showModal,
+  setShowModal,
+  groupId,
+  expenseItem,
+  title,
+}) {
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [expenseData, setExpenseData] = useState({
@@ -10,6 +16,11 @@ export default function ExpenseModal({ showModal, setShowModal, groupId }) {
     expenseAmount: "",
     expenseGroupId: groupId || "",
   });
+  useEffect(() => {
+    if (expenseItem) {
+      setExpenseData(expenseItem);
+    }
+  }, [expenseItem]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -37,7 +48,7 @@ export default function ExpenseModal({ showModal, setShowModal, groupId }) {
             className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
           >
-            <h2 className="text-xl font-semibold text-black">Add Expense</h2>
+            <h2 className="text-xl font-semibold text-black">{title}</h2>
 
             <form ref={formRef} className="text-black">
               <label className="mt-2" htmlFor="expenseName">
