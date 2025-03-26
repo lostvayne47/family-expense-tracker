@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addExpense, fetchGroupExpenses } from "../redux/actions/expense";
+import { fetchGroupExpenses } from "../redux/actions/expense";
 import Expense from "./Expense";
 import { useSelector, useDispatch } from "react-redux";
 import ExpenseModal from "./ExpenseModal";
@@ -46,7 +46,6 @@ export default function ExpenseList({ groupId }) {
   const groupExpensesData = formatAndSortExpenses(groupExpenses);
   function handleAdd() {
     setShowModal(true);
-    // dispatch(addExpense(expenseData));
   }
   return (
     <>
@@ -77,7 +76,11 @@ export default function ExpenseList({ groupId }) {
           <p className="text-white text-2xl">+</p>
         </button>
       </div>
-      <ExpenseModal showModal={showModal} setShowModal={setShowModal} />
+      <ExpenseModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        groupId={groupId}
+      />
     </>
   );
 }
