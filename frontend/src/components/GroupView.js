@@ -29,7 +29,7 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 text-white bg-red-500 rounded-md"
+                className="px-4 py-2 text-white bg-blue-500 rounded-md"
               >
                 Close
               </button>

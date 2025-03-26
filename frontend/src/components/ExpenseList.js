@@ -69,7 +69,7 @@ export default function ExpenseList({ groupId }) {
           )}
         </div>
         <button
-          className="mt-3 mx-auto mb-2 p-1 bg-red-500 text-white rounded-md shadow-sm flex justify-evenly items-center text-lg font-semibold w-40 hover:scale-110"
+          className="mt-3 mx-auto mb-2 p-1 bg-green-500 text-white rounded-md shadow-sm flex justify-evenly items-center text-lg font-semibold w-40 hover:scale-110"
           onClick={handleAdd}
         >
           <p>Add Expense</p>
