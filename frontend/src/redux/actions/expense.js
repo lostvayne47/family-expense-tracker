@@ -18,7 +18,7 @@ export const FETCH_GROUP_EXPENSES_REQUEST = "FETCH_GROUP_EXPENSES_REQUEST";
 export const FETCH_GROUP_EXPENSES_SUCCESS = "FETCH_GROUP_EXPENSES_SUCCESS";
 export const FETCH_GROUP_EXPENSES_FAILURE = "FETCH_GROUP_EXPENSES_FAILURE";
 
-export const SHOW_SUCCESS = "SHOW_SUCCESS";
+export const SHOW_EXPENSE_SUCCESS = "SHOW_EXPENSE_SUCCESS";
 
 export const fetchExpensesRequest = () => ({
   type: FETCH_EXPENSES_REQUEST,
@@ -87,8 +87,8 @@ export const fetchGroupExpensesFailure = (error) => ({
   payload: error,
 });
 
-export const showSuccess = (message) => ({
-  type: SHOW_SUCCESS,
+export const showExpenseSuccess = (message) => ({
+  type: SHOW_EXPENSE_SUCCESS,
   payload: message,
 });
 
@@ -136,7 +136,7 @@ export const addExpense = (expenseData) => {
       dispatch(addExpenseSuccess());
       dispatch(fetchExpenses());
       dispatch(fetchGroupExpenses(expenseData.expenseGroupId));
-      dispatch(showSuccess(data?.message));
+      dispatch(showExpenseSuccess(data?.message));
     } catch (error) {
       dispatch(addExpenseFailure(error.message));
     }
@@ -163,7 +163,7 @@ export const updateExpense = (expenseId, updatedData) => {
       }
       dispatch(updateExpenseSuccess());
       dispatch(fetchExpenses());
-      dispatch(showSuccess(data?.message));
+      dispatch(showExpenseSuccess(data?.message));
     } catch (error) {
       dispatch(updateExpenseFailure(error.message));
     }
@@ -190,7 +190,7 @@ export const deleteExpense = (expense) => {
       dispatch(deleteExpenseSuccess());
       dispatch(fetchExpenses());
       dispatch(fetchGroupExpenses(expense.expenseGroupId));
-      dispatch(showSuccess(data?.message));
+      dispatch(showExpenseSuccess(data?.message));
     } catch (error) {
       dispatch(deleteExpenseFailure(error.message));
     }

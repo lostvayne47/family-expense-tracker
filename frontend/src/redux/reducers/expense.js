@@ -14,7 +14,7 @@ import {
   FETCH_GROUP_EXPENSES_REQUEST,
   FETCH_GROUP_EXPENSES_SUCCESS,
   FETCH_GROUP_EXPENSES_FAILURE,
-  SHOW_SUCCESS,
+  SHOW_EXPENSE_SUCCESS,
 } from "../actions/expense.js";
 
 const initialState = {
@@ -93,7 +93,7 @@ const expenseReducer = (state = initialState, action) => {
       return { ...state, groupLoading: false, groupError: action.payload };
 
     // Show success message
-    case SHOW_SUCCESS:
+    case SHOW_EXPENSE_SUCCESS:
       return {
         ...state,
         expenseLoading: false,

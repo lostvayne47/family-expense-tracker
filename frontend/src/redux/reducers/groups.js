@@ -11,7 +11,7 @@ import {
   DELETE_GROUP_REQUEST,
   DELETE_GROUP_SUCCESS,
   DELETE_GROUP_FAILURE,
-  SHOW_SUCCESS,
+  SHOW_GROUP_SUCCESS,
 } from "../actions/groups.js";
 
 const initialState = {
@@ -67,7 +67,7 @@ const groupReducer = (state = initialState, action) => {
       return { ...state, groupLoading: false };
     case DELETE_GROUP_FAILURE:
       return { ...state, groupLoading: false, groupError: action.payload }; // Store error message
-    case SHOW_SUCCESS:
+    case SHOW_GROUP_SUCCESS:
       return { ...state, groupLoading: false, groupSuccess: action.payload }; // Stores any successful info
     default:
       return state;

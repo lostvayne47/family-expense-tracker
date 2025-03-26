@@ -72,7 +72,13 @@ const Home = () => {
           userError !== null || groupError !== null || expenseError !== null
         }
         showSuccess={groupSuccess !== null || expenseSuccess}
-        message={groupSuccess || userError || groupError || expenseSuccess}
+        message={
+          groupSuccess ||
+          expenseSuccess ||
+          userError ||
+          groupError ||
+          expenseError
+        }
       />
       <div className="flex flex-col sm:flex-row gap-4 bg-dark text-white p-2 h-[calc(100vh-100px)]">
         {/* User Overview - Takes full height and prevents overflow */}

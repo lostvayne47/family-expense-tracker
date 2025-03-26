@@ -14,10 +14,10 @@ export const DELETE_GROUP_REQUEST = "DELETE_GROUP_REQUEST";
 export const DELETE_GROUP_SUCCESS = "DELETE_GROUP_SUCCESS";
 export const DELETE_GROUP_FAILURE = "DELETE_GROUP_FAILURE";
 
-export const SHOW_SUCCESS = "SHOW_SUCCESS";
+export const SHOW_GROUP_SUCCESS = "SHOW_GROUP_SUCCESS";
 
-export const showSuccess = (message) => ({
-  type: SHOW_SUCCESS,
+export const showGroupSuccess = (message) => ({
+  type: SHOW_GROUP_SUCCESS,
   payload: message,
 });
 
@@ -116,7 +116,7 @@ export const createGroup = (groupData) => {
       }
       dispatch(createGroupSuccess());
       dispatch(fetchGroups());
-      dispatch(showSuccess(data?.message));
+      dispatch(showGroupSuccess(data?.message));
     } catch (error) {
       dispatch(createGroupFailure(error.message));
     }
@@ -143,7 +143,7 @@ export const joinGroup = (groupPasscode) => {
       }
       dispatch(joinGroupSuccess());
       dispatch(fetchGroups());
-      dispatch(showSuccess(data?.message));
+      dispatch(showGroupSuccess(data?.message));
     } catch (error) {
       dispatch(joinGroupFailure(error.message));
     }
@@ -170,7 +170,7 @@ export const deleteGroup = (groupId) => {
       }
       dispatch(deleteGroupSuccess());
       dispatch(fetchGroups());
-      dispatch(showSuccess(data?.message));
+      dispatch(showGroupSuccess(data?.message));
     } catch (error) {
       dispatch(deleteGroupFailure(error.message));
     }
