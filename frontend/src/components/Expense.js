@@ -59,6 +59,7 @@ export default function Expense({ expense }) {
         showModal={showModal}
         setShowModal={setShowModal}
         title={"Edit Details"}
+        expenseItem={expense}
       />
     </>
   );
