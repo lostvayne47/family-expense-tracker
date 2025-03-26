@@ -22,7 +22,7 @@ const formatAndSortExpenses = (expenses) => {
 
   // Then, sort them based on the original ISO date
   formattedExpenses?.sort(
-    (a, b) => new Date(a.expenseDate) - new Date(b.expenseDate)
+    (a, b) => new Date(b.expenseDate) - new Date(a.expenseDate)
   );
 
   return formattedExpenses;
