@@ -119,7 +119,7 @@ export const addExpense = (expenseData) => {
   return async (dispatch) => {
     try {
       dispatch(addExpenseRequest());
-      const url = baseURL + "/api/v1/expenses";
+      const url = baseURL + "/api/v1/expenses/createexpense";
       const authToken = localStorage.getItem("auth-token");
       const response = await fetch(url, {
         method: "POST",
