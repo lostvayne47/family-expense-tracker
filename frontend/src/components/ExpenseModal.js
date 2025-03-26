@@ -1,18 +1,27 @@
 import { useDispatch } from "react-redux";
 import { addExpense } from "../redux/actions/expense";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function ExpenseModal({ showModal, setShowModal, groupId }) {
   const dispatch = useDispatch();
+  const formRef = useRef(null);
   const [expenseData, setExpenseData] = useState({
     expenseName: "",
-    expenseAmount: 0,
-    expenseGroupId: "",
+    expenseAmount: "",
+    expenseGroupId: groupId || "",
   });
+
   function handleSubmit(event) {
     event.preventDefault();
-    // dispatch(addExpense(expenseData));
+    if (!formRef.current.checkValidity()) {
+      formRef.current.reportValidity();
+      return;
+    }
+    console.log(expenseData);
+    dispatch(addExpense(expenseData));
+    setShowModal(false);
   }
+
   function handleChange(event) {
     setExpenseData((prevState) => ({
       ...prevState,
@@ -30,12 +39,12 @@ export default function ExpenseModal({ showModal, setShowModal, groupId }) {
           >
             <h2 className="text-xl font-semibold text-black">Add Expense</h2>
 
-            <form className="text-black">
+            <form ref={formRef} className="text-black">
               <label className="mt-2" htmlFor="expenseName">
                 Name <span className="text-red-500">*</span>
               </label>
               <input
-                className="p-1 border rounded block w-100"
+                className="p-1 border rounded block w-full"
                 type="text"
                 id="expenseName"
                 name="expenseName"
@@ -49,13 +58,13 @@ export default function ExpenseModal({ showModal, setShowModal, groupId }) {
                 Amount <span className="text-red-500">*</span>
               </label>
               <input
-                className="p-1 border rounded block w-100"
+                className="p-1 border rounded block w-full"
                 type="number"
                 id="expenseAmount"
                 name="expenseAmount"
                 placeholder="1000"
                 onChange={handleChange}
-                value={expenseData.expenseName}
+                value={expenseData.expenseAmount}
                 required
               />
             </form>

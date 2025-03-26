@@ -135,6 +135,7 @@ export const addExpense = (expenseData) => {
       }
       dispatch(addExpenseSuccess());
       dispatch(fetchExpenses());
+      dispatch(fetchGroupExpenses(expenseData.expenseGroupId));
       dispatch(showSuccess(data?.message));
     } catch (error) {
       dispatch(addExpenseFailure(error.message));
