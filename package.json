@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "both": "concurrently \"cd frontend && npm run start\" \"cd backend && nodemon\""
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "concurrently": "^9.1.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "react-icons": "^5.5.0"
+  }
+}
