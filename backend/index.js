@@ -14,7 +14,7 @@ app.use(express.json()); // Required for parsing JSON in POST requests
 // Enable CORS
 app.use(
   cors({
-    origin: "https://family-expense-tracker-frontend-six.vercel.app/", // Update with your frontend URL
+    origin: "https://family-expense-tracker-frontend-six.vercel.app", // Update with your frontend URL
     methods: "GET, POST, PUT, DELETE, OPTIONS",
     allowedHeaders: ["Content-Type", "auth-token"],
     credentials: true,
