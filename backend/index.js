@@ -11,7 +11,6 @@ const port = process.env.PORT || 5000;
 
 // ✅ Middleware (Must Be Before Routes)
 app.use(express.json()); // Required for parsing JSON in POST requests
-app.use(cors()); // Enable CORS (if testing via frontend later)
 // Enable CORS
 app.use(
   cors({
