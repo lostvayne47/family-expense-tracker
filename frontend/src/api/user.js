@@ -9,6 +9,8 @@ const createUser = async (payload) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
+      mode: "cors",
+      credentials: "include", // Add this if using authentication cookies
     });
     const data = await res.json();
     return data;
@@ -26,6 +28,8 @@ const loginUser = async (payload) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
+      mode: "cors",
+      credentials: "include", // Add this if using authentication cookies
     });
     const data = await res.json();
     if (data.authToken) {
