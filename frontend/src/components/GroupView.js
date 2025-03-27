@@ -11,25 +11,25 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
         >
           {/* Modal Content */}
           <div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg w-75 transition-transform transform scale-95 animate-fadeIn"
+            className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-3xl transition-transform transform scale-95 animate-fadeIn"
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
-            <div className="d-flex justify-content-between">
+            {/* Header */}
+            <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">{groupData?.groupName}</h2>
               <h2 className="text-xl font-semibold">
                 Members: {groupData?.groupMembers?.length}
               </h2>
             </div>
-            <div
-              className="mt-2 bg-black flex"
-              style={{ maxHeight: "80vh", overflowY: "auto" }}
-            >
-              <div className="w-1/2 p-2">
+
+            {/* Expense List & Chart - Wraps on Small Screens */}
+            <div className="mt-2 bg-black flex flex-wrap gap-2">
+              <div className="w-full sm:w-1/2 p-2">
                 <ExpenseList groupId={groupData._id} />
               </div>
-              <div className="w-1/2 p-2">
+              <div className="w-full sm:w-1/2 p-2">
                 <ExpenseChart groupId={groupData._id} />
               </div>
             </div>
