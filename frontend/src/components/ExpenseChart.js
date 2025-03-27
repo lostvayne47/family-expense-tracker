@@ -46,9 +46,6 @@ export default function ExpenseList({ groupId }) {
   );
 
   const groupExpensesData = formatAndSortExpenses(groupExpenses);
-  function handleAdd() {
-    setShowModal(true);
-  }
 
   return (
     <>

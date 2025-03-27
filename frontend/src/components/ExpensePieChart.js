@@ -29,9 +29,21 @@ const ExpensePieChart = ({ expenses }) => {
       },
     ],
   };
+  const options = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "white", // Change label color (Gray-600)
+          font: {
+            size: 14,
+          },
+        },
+      },
+    },
+  };
   //   console.log(data, "data in pie");
 
-  return <Pie data={data} />;
+  return <Pie data={data} options={options} />;
 };
 
 export default ExpensePieChart;
