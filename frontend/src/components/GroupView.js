@@ -11,7 +11,11 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
         >
           {/* Modal Content */}
           <div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-3xl transition-transform transform scale-95 animate-fadeIn"
+            className="bg-gray-800 p-6 rounded-lg shadow-lg w-75 transition-transform transform scale-95 animate-fadeIn"
+            style={{
+              maxHeight: "100vh",
+              overflow: "auto",
+            }}
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
@@ -25,7 +29,7 @@ export default function GroupView({ showModal, setShowModal, groupData }) {
             </div>
 
             {/* Expense List & Chart - Wraps on Small Screens */}
-            <div className="mt-2 bg-black flex flex-wrap gap-2">
+            <div className="mt-2 bg-black flex flex-wrap">
               <div className="w-full sm:w-1/2 p-2">
                 <ExpenseList groupId={groupData._id} />
               </div>
