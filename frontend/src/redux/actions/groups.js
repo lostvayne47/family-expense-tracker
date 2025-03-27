@@ -87,6 +87,8 @@ export const fetchGroups = () => {
           "Content-Type": "application/json",
           "auth-token": authToken,
         },
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       dispatch(fetchGroupSuccess(data)); // Store user data
@@ -109,6 +111,8 @@ export const createGroup = (groupData) => {
           "auth-token": authToken,
         },
         body: JSON.stringify(groupData),
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {
@@ -136,6 +140,8 @@ export const joinGroup = (groupPasscode) => {
           "auth-token": authToken,
         },
         body: JSON.stringify(groupPasscode),
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {
@@ -163,6 +169,8 @@ export const deleteGroup = (groupId) => {
           "auth-token": authToken,
         },
         body: JSON.stringify(groupId),
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {

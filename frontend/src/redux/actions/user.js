@@ -29,6 +29,8 @@ export const fetchUser = () => {
           "Content-Type": "application/json",
           "auth-token": autToken,
         },
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       dispatch(fetchUserSuccess(data)); // Store user data

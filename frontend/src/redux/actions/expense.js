@@ -106,6 +106,8 @@ export const fetchExpenses = () => {
           "Content-Type": "application/json",
           "auth-token": authToken,
         },
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       dispatch(fetchExpensesSuccess(data.expenses));
@@ -128,6 +130,8 @@ export const addExpense = (expenseData) => {
           "auth-token": authToken,
         },
         body: JSON.stringify(expenseData),
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {
@@ -156,6 +160,8 @@ export const updateExpense = (updatedExpense) => {
           "auth-token": authToken,
         },
         body: JSON.stringify(updatedExpense),
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {
@@ -183,6 +189,8 @@ export const deleteExpense = (expense) => {
           "Content-Type": "application/json",
           "auth-token": authToken,
         },
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       if (!data.success) {
@@ -210,6 +218,8 @@ export const fetchGroupExpenses = (groupId) => {
           "Content-Type": "application/json",
           "auth-token": authToken,
         },
+        mode: "cors",
+        credentials: "include", // Add this if using authentication cookies
       });
       const data = await response.json();
       dispatch(fetchGroupExpensesSuccess(data?.expenses));
